@@ -6,9 +6,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
-import { useScrollTrigger} from '@material-ui/core';
-import Container from '@material-ui/core/Container';
 import MenuAppBar from './Components/MenuAppBar'
 
 
@@ -22,16 +19,14 @@ class Expenses extends Component{
         }
     }
 
-    componentDidMount(){
-        fetch('http://localhost:8080/api/expenses')
-            .then(respons => respons.json())
-            .then(data => {
-                this.setState({
+    async componentDidMount(){
+        const respons = await fetch('http://localhost:8080/api/expenses');
+        const data = await respons.json();
+        this.setState({
                     isLoaded: true,
                     data: data,
-                })
-            });
-    }
+                });
+            }
 
     render(){
         var {isLoaded, data} = this.state;

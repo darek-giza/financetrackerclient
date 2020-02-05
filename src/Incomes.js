@@ -7,10 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
-import { useScrollTrigger} from '@material-ui/core';
-import Container from '@material-ui/core/Container';
-
 
 class Incomes extends Component {
 
@@ -22,15 +18,13 @@ class Incomes extends Component {
                 }
             }
 
-            componentDidMount(){
-                fetch('http://localhost:8080/api/incomes')
-                    .then(respons => respons.json())
-                    .then(incomes => {
-                        this.setState({
+            async componentDidMount(){
+                const reponse = await fetch('http://localhost:8080/api/incomes');
+                const incomes = await reponse.json();
+                this.setState({
                             isLoaded: true,
                             incomes: incomes,
-                        })
-                    });
+                        });
             }
 
     render(){

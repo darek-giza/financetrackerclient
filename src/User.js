@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import MenuAppBar from './Components/MenuAppBar'
-import  Button  from '@material-ui/core/Button';
+import Button  from '@material-ui/core/Button';
 
 
 class User extends Component{
@@ -20,21 +20,21 @@ class User extends Component{
         }
     }
 
-    componentDidMount(){
+    
 
 //  http://loclhost:8080/api/user
 //  should download current user when he is loged in
-        
-        fetch('http://localhost:8080/api/users/2')
-            .then(respons => respons.json())
-            .then(user => {
-                this.setState({
-                    isLoaded: true,
-                    user: user,
-                })
-                console.log(user)
+
+    async componentDidMount(){
+            const response = await fetch('http://localhost:8080/api/users/2');
+            const user = await response.json();
+            this.setState({
+                isLoaded: true,
+                user: user,
             });
-    }
+        }
+
+        
 
     render(){
         var {isLoaded, user} = this.state;
