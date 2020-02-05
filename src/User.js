@@ -69,7 +69,7 @@ class User extends Component{
                                     <TableCell>{user.email}</TableCell>
                                     <TableCell>{user.budget.balance}</TableCell>
                                     <TableCell width="15%">
-                                            <Button variant="contained">Edit</Button>
+                                            <Button variant="outlined" size="large">Edit</Button>
                                     </TableCell>
                                    
                                 </TableRow>
@@ -87,7 +87,7 @@ class User extends Component{
                                     )
                                     </TableCell>
                                     <TableCell width="15%">
-                                                 <Button variant="contained" color="primary" href="/incomes">Go to details ...</Button>
+                                                 <Button variant="outlined" color="primary" href="/incomes">Go to details ...</Button>
                                     </TableCell>
                     </TableBody>
                 </Table>
@@ -103,7 +103,7 @@ class User extends Component{
                                         )
                                     </TableCell>
                                     <TableCell width="15%">
-                                              <Button variant="contained" color="primary" href="/expenses">Go to details ...</Button>
+                                              <Button variant="outlined" color="primary" href="/expenses">Go to details ...</Button>
                                     </TableCell>
                     </TableBody>
                 </Table>
