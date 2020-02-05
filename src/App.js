@@ -5,6 +5,9 @@ import User from './User'
 import Home from './Home'
 import Incomes from './Incomes'
 import Expenses from './Expenses'
+import Login from './Login'
+import Logout from './Logout'
+import Signup from './Signup'
 
 class App extends Component {
   state ={}
@@ -16,6 +19,9 @@ class App extends Component {
           <Route path='/user' exact={true} component={User}></Route>
           <Route path='/incomes' exact={true} component={Incomes}></Route>
           <Route path='/expenses' exact={true} component={Expenses}></Route>
+          <Route path='/login' exact={true} component={Login}></Route>
+          <Route path='/signup' exact={true} component={Signup}></Route>
+          <Route path='/logout' exact={true} component={Logout}></Route>
         </Switch>
       </Router>
       );

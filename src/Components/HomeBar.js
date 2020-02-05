@@ -26,16 +26,11 @@ export default function MenuAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" className={classes.title}>
             Finance Tracker
           </Typography>
-          <Button color="inherit" href='/user'>User</Button>
-          <Button color="inherit" href='/incomes'>Incomes</Button>
-          <Button color="inherit" href='/expenses'>Expenses</Button>
-          <Button color="inherit"href='/logout'>Logout</Button>
+          <Button color="inherit" href='/login'>Sign in</Button>
+          <Button color="inherit"href='/signup'>Sign up</Button>
         </Toolbar>
       </AppBar>
     </div>

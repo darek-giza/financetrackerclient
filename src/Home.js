@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MenuAppBar from './Components/MenuAppBar'
+import HomeBar from './Components/HomeBar'
 
 
 class Home extends Component {
@@ -7,7 +7,7 @@ class Home extends Component {
     return (
         <div>
 
-            < MenuAppBar/>
+            <HomeBar/>
             <br></br>
 
             <h1>Hello on my home page ... </h1>

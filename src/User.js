@@ -6,10 +6,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
-import { useScrollTrigger} from '@material-ui/core';
-import Container from '@material-ui/core/Container';
 import MenuAppBar from './Components/MenuAppBar'
+import  Button  from '@material-ui/core/Button';
 
 
 class User extends Component{
@@ -17,24 +15,29 @@ class User extends Component{
     constructor(props) {
         super();
         this.state={
-            data: [],
+            user: [],
             isLoaded: false,
         }
     }
 
     componentDidMount(){
-        fetch('http://localhost:8080/api/users/all')
+
+//  http://loclhost:8080/api/user
+//  should download current user when he is loged in
+        
+        fetch('http://localhost:8080/api/users/2')
             .then(respons => respons.json())
-            .then(data => {
+            .then(user => {
                 this.setState({
                     isLoaded: true,
-                    data: data,
+                    user: user,
                 })
+                console.log(user)
             });
     }
 
     render(){
-        var {isLoaded, data} = this.state;
+        var {isLoaded, user} = this.state;
 
         if(!isLoaded){
             return <div>Loading ...</div>
@@ -56,32 +59,52 @@ class User extends Component{
                             <TableCell >User Name</TableCell>
                             <TableCell >Email</TableCell>
                             <TableCell >Balance</TableCell>
-                            <TableCell >Incomes</TableCell>
-                            <TableCell >Expenses</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.state.data.map(user =>{
-                            return(
                                 <TableRow key={user.id}>
                                     <TableCell component="th" > {user.id}</TableCell>
                                     <TableCell>{user.username}</TableCell>
                                     <TableCell>{user.email}</TableCell>
                                     <TableCell>{user.budget.balance}</TableCell>
-                                    <TableCell>
-                                    Incomes
+                                    <TableCell width="15%">
+                                            <Button variant="contained">Edit</Button>
+                                    </TableCell>
+                                   
+                                </TableRow>
+                    </TableBody>
+                </Table>
+                </TableContainer>
+                <TableContainer>
+                    <h3>List of amounts of your recent incomes</h3>
+                <Table>
+                    <TableBody>
+                                  <TableCell>
+                                    >>
                                     (
                                     {user.budget.incomes.map((income) => income.amount).join(', ')}
                                     )
                                     </TableCell>
+                                    <TableCell width="15%">
+                                                 <Button variant="contained" color="primary" href="/incomes">Go to details ...</Button>
+                                    </TableCell>
+                    </TableBody>
+                </Table>
+                </TableContainer>
+                <TableContainer>
+                    <h3>List of amounts of your recent expenses</h3>
+                <Table>
+                    <TableBody>
                                     <TableCell>
-                                        Expense
+                                        >>
                                         (
                                         {user.budget.expense.map((expense) => expense.amount).join(', ')}
                                         )
                                     </TableCell>
-                                </TableRow>
-                            )})}
+                                    <TableCell width="15%">
+                                              <Button variant="contained" color="primary" href="/expenses">Go to details ...</Button>
+                                    </TableCell>
                     </TableBody>
                 </Table>
             </TableContainer>
