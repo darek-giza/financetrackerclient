@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {FormGroup,Container, Button, ButtonGroup} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import StickyFooter from './StickyFooter';
 
 
 const useStyles = makeStyles(theme => ({
@@ -51,6 +52,8 @@ class Expenses extends Component{
                 });
             }
 
+    cancelExpense = () =>document.getElementById("create-expense-form").reset();
+
     render(){
         var {isLoaded, data} = this.state;
         const {classes} = this.props;
@@ -62,54 +65,56 @@ class Expenses extends Component{
         return(  
              
             <React.Fragment>
-            
-                       <MenuAppBar/>
-                      <Container className={classes.cont} maxWidth="sm">
-                       <form className={classes.root} noValidate autoComplete="off">
-                         <h4>Add a new expense ...</h4>
-                           <p>
-                           <TextField id="standard-basic" label="Type of expense" onChange={this.handleChange}/></p>
-                           <p>
-                           <TextField id="standard-basic" label="Amount" onChange={this.handleChange}/></p>
-                           <p>
-                           <TextField id="standard-basic" label="Description" onChange={this.handleChange} /></p>
-                           <p>
-                           <TextField id="standard-basic" label="Date" onChange={this.handleChange} /></p>    
-                       </form>
+                <MenuAppBar/>
+                    <Container className={classes.cont} maxWidth="sm">
+                        <form className={classes.root} noValidate autoComplete="off" id="create-expense-form">
+                            <h4>Add a new expense ...</h4>
+                            <p>
+                            <TextField id="standard-basic" label="Type of expense" onChange={this.handleChange}/></p>
+                            <p>
+                            <TextField id="standard-basic" label="Amount" onChange={this.handleChange}/></p>
+                            <p>
+                            <TextField id="standard-basic" label="Description" onChange={this.handleChange} /></p>
+                            <p>
+                            <TextField id="standard-basic" label="Date" onChange={this.handleChange} /></p>    
+                        </form>
                        
                          <Button color="primary" variant="outlined" size="small" className={classes.button}>Save</Button>
-                         <Button href="/expenses" color="secondary" variant="outlined" size="small" className={classes.button}>Cancel</Button>
-                      
-                       </Container>
+                         <Button color="secondary" variant="outlined" size="small" className={classes.button}
+                         onClick={this.cancelExpense}>Cancel</Button>
+                    </Container>
 
                        <h1>Statement of all expenses</h1>
                 
-            <TableContainer component={Paper}>
-                <Table size="small" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell >#</TableCell>
-                            <TableCell >Type of expenses</TableCell>
-                            <TableCell >Amount</TableCell>
-                            <TableCell >Description</TableCell>
-                            <TableCell >Date</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.state.data.map(expense =>{
-                            return(
-                                <TableRow key={expense.id}>
-                                    <TableCell component="th" > {expense.id}</TableCell>
-                                    <TableCell>{expense.expensesType}</TableCell>
-                                    <TableCell>{expense.amount}</TableCell>
-                                    <TableCell>{expense.description}</TableCell>
-                                    <TableCell>{expense.date}</TableCell>
-                                </TableRow>
-                            )})}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            </React.Fragment>    
+                <TableContainer component={Paper}>
+                    <Table size="small" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell >#</TableCell>
+                                <TableCell >Type of expenses</TableCell>
+                                <TableCell >Amount</TableCell>
+                                <TableCell >Description</TableCell>
+                                <TableCell >Date</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.state.data.map(expense =>{
+                                return(
+                                    <TableRow key={expense.id}>
+                                        <TableCell component="th" > {expense.id}</TableCell>
+                                        <TableCell>{expense.expensesType}</TableCell>
+                                        <TableCell>{expense.amount}</TableCell>
+                                        <TableCell>{expense.description}</TableCell>
+                                        <TableCell>{expense.date}</TableCell>
+                                    </TableRow>
+                                )})}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+             <StickyFooter/>
+            </React.Fragment>   
+            
+            
         )}}
 
 }

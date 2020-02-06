@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import HomeBar from './Components/HomeBar'
+import StickyFooter from './StickyFooter'
 
 
 class Home extends Component {
@@ -8,13 +9,12 @@ class Home extends Component {
         <div>
 
             <HomeBar/>
-            <br></br>
-
+            
             <h1>Hello on my home page ... </h1>
-
-
-        </div>
-      
+            
+            <StickyFooter/>
+        
+        </div> 
     )
   }
 }

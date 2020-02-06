@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import MenuAppBar from './Components/MenuAppBar'
 import Button  from '@material-ui/core/Button';
+import StickyFooter from './StickyFooter';
 
 
 class User extends Component{
@@ -108,6 +109,7 @@ class User extends Component{
                     </TableBody>
                 </Table>
             </TableContainer>
+            <StickyFooter/>
             </React.Fragment>    
         )}}
 
