@@ -34,7 +34,7 @@ export default function MenuAppBar() {
             Finance Tracker
           </Typography>
               <ButtonGroup className={classes.menuButton} color="inherit" variant="outlined" size="small">
-                    <Button href='/login' >Sign in</Button>
+                    <Button href='/signin' >Sign in</Button>
                     <Button href='/signup'>Sign up</Button>
               </ButtonGroup>
         </Toolbar>
