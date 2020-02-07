@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
 import Link from '@material-ui/core/Link';
+import lightblue from '@material-ui/core/colors/lightBlue'
 
 const styles = {
   intro:{
@@ -9,7 +10,8 @@ const styles = {
     backgroundImage: 'url(' +require('./Images/intro_image.jpg')+')',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    color:'lightblue',
+    color:lightblue[200],
+    // 
     letterSpacing:'20px',
     fontSize:'90px',
     textAlign:'right',
