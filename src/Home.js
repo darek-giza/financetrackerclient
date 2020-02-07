@@ -24,10 +24,10 @@ const styles = {
   description:{
     fontSize:'10px',
     textAlign:'left',
-    letterSpacing:'2px',
-    fontSize:'24px',
+    letterSpacing:'4px',
+    fontSize:'25px',
     marginBottom:'100px',
-    padding:'480px 0px 0px 70px '
+    padding:'520px 0px 0px 100px '
 
   }
 };
@@ -38,15 +38,12 @@ class Home extends Component {
     return (
       <div className={classes.intro}>
             <span>Finance tracker</span><br/>
-            <a><Link href="/signin" className={classes.button} color="primary">Log in here ... </Link></a>
+            <a><Link href="/signin" className={classes.button} color="primary">Log in here ..</Link></a>
                   <br/>
             <div className={classes.description}>
                       Want to know where your money is?<br/>
                       Log in, add your income and expenses and <br/>
-                      check what's going on your money.<br/>
-                      You will find that a good life costs a lot ...<br/>
-                      Will you see if you can plan any extra expenses for the next month?<br/>
-                      I hope you have enough money for your next payment.     
+                      check what's going on your money ...?<br/>
             </div>
       </div>
     )
