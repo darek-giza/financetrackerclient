@@ -5,30 +5,28 @@ import lightblue from '@material-ui/core/colors/lightBlue'
 
 const styles = {
   intro:{
-    width: '100%',
-    height:'900px',
+    width: 'auto',
+    height:'1024px',
     backgroundImage: 'url(' +require('./Images/intro_image.jpg')+')',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     color:lightblue[200],
-    // 
-    letterSpacing:'20px',
-    fontSize:'90px',
+    letterSpacing:'6px',
+    fontSize:'140px',
     textAlign:'right',
+    padding:'0px 40px 0px 0px',
+    fontWeight:'bold',
   },
-  button:{
-    fontSize:'50px',
+  link:{
+    fontSize:'40px',
     color:'inherit',
-    textTransform:'lowercase',
+    fontWeight:'normal',
   },
   description:{
-    fontSize:'10px',
     textAlign:'left',
-    letterSpacing:'4px',
-    fontSize:'25px',
-    marginBottom:'100px',
-    padding:'520px 0px 0px 100px '
-
+    fontSize:'40px',
+    padding:'440px 0px 0px 40px ',
+    fontWeight:'normal'
   }
 };
 
@@ -38,12 +36,11 @@ class Home extends Component {
     return (
       <div className={classes.intro}>
             <span>Finance tracker</span><br/>
-            <a><Link href="/signin" className={classes.button} color="primary">Log in here ..</Link></a>
-                  <br/>
+            <Link href="/signin" className={classes.link} color="primary">Log in here ..</Link>
             <div className={classes.description}>
-                      Want to know where your money is?<br/>
-                      Log in, add your income and expenses and <br/>
-                      check what's going on your money ...?<br/>
+              <p>Want to know where your money is?</p>
+              <p>Log in, add your income and expenses and</p>
+              <p>check what's going on your money ...?</p>
             </div>
       </div>
     )
