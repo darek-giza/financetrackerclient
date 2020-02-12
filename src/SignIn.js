@@ -1,4 +1,5 @@
-import React from 'react';
+import React,{useState} from 'react';
+import {request} from './request';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -48,6 +49,32 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+
+  const onUsernameChange = (event) => {
+    setUsername(event.target.value);
+  }
+
+  const onPasswordChange = (event) =>{
+    setPassword(event.target.value);
+  }
+
+  const login = async() => {
+    try{ 
+      const data = await request('http://localhost:8080/authenticate',{
+      // const data = await request('http://jsonplaceholder.typicode.com/post',{
+        body: JSON.stringify({username}),
+        method: 'POST'
+    
+        
+      });
+      localStorage.setItem('token',data.token);
+      localStorage.setItem('id',data.id);
+    }catch(error){
+      localStorage.removeItem('token');
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -61,17 +88,19 @@ export default function SignIn() {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
+            onChange={onUsernameChange}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="User name"
+            name="username"
+            autoComplete="username"
             autoFocus
           />
           <TextField
+            onChange={onPasswordChange}
             variant="outlined"
             margin="normal"
             required
@@ -92,6 +121,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={login}
           >
             Sign In
           </Button>

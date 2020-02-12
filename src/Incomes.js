@@ -10,6 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import StickyFooter from './StickyFooter';
 import Moment from 'react-moment';
+import {request} from './request';
 
 
 const useStyles = makeStyles({
@@ -29,8 +30,7 @@ class Incomes extends Component {
             }
 
             async componentDidMount(){
-                const reponse = await fetch('http://localhost:8080/api/incomes');
-                const incomes = await reponse.json();
+                const incomes = await request('http://localhost:8080/api/incomes');
                 this.setState({
                             isLoaded: true,
                             incomes: incomes,

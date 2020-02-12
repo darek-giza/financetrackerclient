@@ -46,8 +46,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
+
 export default function SignUp() {
   const classes = useStyles();
+
+  // constructor(props){
+  //   super(props)
+  //         this.state = {
+  //           email:'',
+  //           password:'',
+  //           registrationErrors:''
+  //         };
+  //               this.handleSubmit = this.handleSubmit.bind(this);
+  //               this.handleChange = this.handleChange.bind(this);
+  //       };
+      
+  // handleChange(event)
+  //   this.setState({
+  //         [event.target.name]: event.target.value
+  //   })
+
 
   return (
     <Container component="main" maxWidth="xs">
