@@ -63,8 +63,7 @@ export default function SignIn() {
   const login = async() => {
     try{ 
       const data = await request('http://localhost:8080/authenticate',{
-      // const data = await request('http://jsonplaceholder.typicode.com/post',{
-        body: JSON.stringify({username}),
+        body: JSON.stringify({username, password}),
         method: 'POST'
     
         
@@ -116,7 +115,6 @@ export default function SignIn() {
             label="Remember me"
           />
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"

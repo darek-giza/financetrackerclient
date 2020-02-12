@@ -13,6 +13,7 @@ import {FormGroup,Container, Button, ButtonGroup} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import StickyFooter from './StickyFooter';
+import {request} from './request';
 
 
 const useStyles = makeStyles(theme => ({
@@ -44,8 +45,7 @@ class Expenses extends Component{
     }
 
     async componentDidMount(){
-        const respons = await fetch('http://localhost:8080/api/expenses');
-        const data = await respons.json();
+        const data = await request('http://localhost:8080/api/expenses');
         this.setState({
                     isLoaded: true,
                     data: data,
