@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import {request} from './request';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -51,7 +51,8 @@ export default function SignIn() {
   const classes = useStyles();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-
+  const [loggedIn, setLoggedIn] = useState(false);
+ 
   const onUsernameChange = (event) => {
     setUsername(event.target.value);
   }
@@ -59,21 +60,38 @@ export default function SignIn() {
   const onPasswordChange = (event) =>{
     setPassword(event.target.value);
   }
-
-  const login = async() => {
-    try{ 
-      const data = await request('http://localhost:8080/authenticate',{
-        body: JSON.stringify({username, password}),
-        method: 'POST'
     
-        
+  const login = async(props) => {
+    try{ 
+      const respons = await request('http://localhost:8080/authenticate',{
+        body: JSON.stringify({username, password}),
+        method: 'POST' 
       });
+      const data = await respons.json();
       localStorage.setItem('token',data.token);
-      localStorage.setItem('id',data.id);
-    }catch(error){
-      localStorage.removeItem('token');
-    }
+      localStorage.setItem('id',data.id)
+
+
+      if(respons.status == 200){
+        console.log("status",respons.status)
+        console.log(data)
+
+        // setLoggedIn(loggedIn)
+
+        // if(loggedIn == false){
+        //   console.log("logg == false", true)
+        // }
+
+        // if(loggedIn){
+        //   console.log("zalogowany", true)
+        // }
+      
+      }
+          }catch(error){
+        localStorage.removeItem('token');
+      } 
   };
+
 
   return (
     <Container component="main" maxWidth="xs">

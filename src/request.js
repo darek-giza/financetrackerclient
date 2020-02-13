@@ -10,6 +10,5 @@
           export const request = async (url, config = {}) => {
             const request = await fetch(url, { ...config, headers:
             getHeaders(config.headers)});
-           
-            return await request.json();
+            return request;
           };

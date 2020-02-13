@@ -20,8 +20,7 @@ const useStyles = makeStyles({
   });
 
 class Incomes extends Component {
-
-        constructor(props) {
+            constructor(props) {
                 super();
                 this.state={
                     incomes: [],
@@ -41,14 +40,12 @@ class Incomes extends Component {
         var {isLoaded, incomes} = this.state;
 
         const {classes} = this.props;
-
+   
         if(!isLoaded){
             return <div>Loading ...</div>
         }else {
 
         return( 
-            
-            
             <React.Fragment>
             
                     <MenuAppBar/>

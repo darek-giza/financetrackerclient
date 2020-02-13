@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import MenuAppBar from './Components/MenuAppBar'
 import Button  from '@material-ui/core/Button';
 import StickyFooter from './StickyFooter';
+import {request} from './request';
 
 
 class User extends Component{
@@ -21,14 +22,8 @@ class User extends Component{
         }
     }
 
-    
-
-//  http://loclhost:8080/api/user
-//  should download current user when he is loged in
-
     async componentDidMount(){
-            const response = await fetch('http://localhost:8080/api/users/2');
-            const user = await response.json();
+            const user = await request('http://localhost:8080/api/users/2');
             this.setState({
                 isLoaded: true,
                 user: user,
