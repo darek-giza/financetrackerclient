@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Redirect } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -61,40 +62,28 @@ export default function SignIn() {
     setPassword(event.target.value);
   }
     
-  const login = async(props) => {
+  const login = async() => {
     try{ 
-      const respons = await request('http://localhost:8080/authenticate',{
+      const data = await request('http://localhost:8080/authenticate',{
         body: JSON.stringify({username, password}),
         method: 'POST' 
       });
-      const data = await respons.json();
+      
       localStorage.setItem('token',data.token);
       localStorage.setItem('id',data.id)
+      setLoggedIn(true)
 
 
-      if(respons.status == 200){
-        console.log("status",respons.status)
-        console.log(data)
-
-        // setLoggedIn(loggedIn)
-
-        // if(loggedIn == false){
-        //   console.log("logg == false", true)
-        // }
-
-        // if(loggedIn){
-        //   console.log("zalogowany", true)
-        // }
-      
-      }
-          }catch(error){
+      }catch(error){
         localStorage.removeItem('token');
+        setLoggedIn(false)
       } 
   };
 
 
   return (
     <Container component="main" maxWidth="xs">
+      {loggedIn && <Redirect to="/incomes"/>}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

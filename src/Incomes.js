@@ -33,7 +33,7 @@ class Incomes extends Component {
                 this.setState({
                             isLoaded: true,
                             incomes: incomes,
-                        });
+                        });                     
             }
 
     render(){
