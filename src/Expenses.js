@@ -14,13 +14,14 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import StickyFooter from './StickyFooter';
 import {request} from './request';
+import MaterialUIPickers from "./MaterialUIPickers"
 
 
 const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      width: 400,
+      width: 200,
     },
   },
   button: {
@@ -28,13 +29,17 @@ const useStyles = makeStyles(theme => ({
   },
   cont: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-
   },
 }));
 
 
 
 class Expenses extends Component{
+
+    state={
+        date: new Date(),
+        expenses:[]
+    }
 
     constructor(props) {
         super();
@@ -54,8 +59,17 @@ class Expenses extends Component{
 
     cancelExpense = () =>document.getElementById("create-expense-form").reset();
 
+    save = async() => {
+
+          const expenses = await request('http://localhost:8080/api/expenses',{
+            body: JSON.stringify({expenses}),
+            method: 'POST' 
+          });
+        this.setState({expenses : body})  
+          }; 
+
     render(){
-        var {isLoaded, data} = this.state;
+        var {isLoaded, data, expenses}= this.state;
         const {classes} = this.props;
 
         if(!isLoaded){
@@ -67,19 +81,20 @@ class Expenses extends Component{
             <React.Fragment>
                 <MenuAppBar/>
                     <Container className={classes.cont} maxWidth="sm">
-                        <form className={classes.root} noValidate autoComplete="off" id="create-expense-form">
-                            <h4>Add a new expense ...</h4>
-                            <p>
-                            <TextField id="standard-basic" label="Type of expense" onChange={this.handleChange}/></p>
-                            <p>
-                            <TextField id="standard-basic" label="Amount" onChange={this.handleChange}/></p>
-                            <p>
-                            <TextField id="standard-basic" label="Description" onChange={this.handleChange} /></p>
-                            <p>
-                            <TextField id="standard-basic" label="Date" onChange={this.handleChange} /></p>    
+                        <form className={classes.root} noValidate autoComplete="off" id="create-expense-form"
+                                onSubmit={this.handleSubmit}>
+                            <div><h4>Add a new expense ...</h4></div>
+                            <div>
+                            <TextField type="text" id="type" label="Type of expense" onChange={this.handleChange} name="type"/></div>
+                            <div>
+                            <TextField type="text" id="amount" label="Amount" onChange={this.handleChange} name="amount"/></div>  
+                            <div>
+                            <TextField type="text" id="description" label="Description" onChange={this.handleChange} name="decription"/></div>
+                            <div>
+                            <MaterialUIPickers selected={this.state.date} onChange={this.handleChange}/></div>
                         </form>
-                       
-                         <Button color="primary" variant="outlined" size="small" className={classes.button}>Save</Button>
+                         <Button color="primary" variant="outlined" size="small" className={classes.button}
+                         onClick={this.save} type="submit">Save</Button>{' '}
                          <Button color="secondary" variant="outlined" size="small" className={classes.button}
                          onClick={this.cancelExpense}>Cancel</Button>
                     </Container>
