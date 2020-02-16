@@ -36,40 +36,70 @@ const useStyles = makeStyles(theme => ({
 
 class Expenses extends Component{
 
-    state={
-        date: new Date(),
-        expenses:[]
+    emptyItem ={
+                expensesType: "",
+                amount:"",
+                description:"",
+                date:"",
     }
 
-    constructor(props) {
-        super();
+    constructor(props){
+        super(props)
+
         this.state={
-            data: [],
+            expenses: [],
             isLoaded: false,
+            item: this.emptyItem
+            
         }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
     }
 
     async componentDidMount(){
-        const data = await request('http://localhost:8080/api/expenses');
+        const expenses = await request('http://localhost:8080/api/expenses');
         this.setState({
                     isLoaded: true,
-                    data: data,
+                    expenses: expenses,
                 });
             }
 
+    async handleSubmit(event){
+        event.preventDefault();
+        const {item}=this.state;
+        await request('http://localhost:8080/api/expenses',{
+            body: JSON.stringify({item}),
+            method:'POST',
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+        console.log(this.state);
+        this.props.history.push("/expenses")
+    };       
+
     cancelExpense = () =>document.getElementById("create-expense-form").reset();
 
-    save = async() => {
+    handleChange(event){
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        let item = {...this.state.item};
+        item[name] = value;
+        this.setState({item});
+        console.log(this.state.item)
+    }
 
-          const expenses = await request('http://localhost:8080/api/expenses',{
-            body: JSON.stringify({expenses}),
-            method: 'POST' 
-          });
-        this.setState({expenses : body})  
-          }; 
+    handleDateChange(date){
+        let item={...this.state.item};
+        item.date = date;
+        this.setState({item});
+        console.log(item)
+    }
 
     render(){
-        var {isLoaded, data, expenses}= this.state;
+        var {expenses,isLoaded}= this.state;
         const {classes} = this.props;
 
         if(!isLoaded){
@@ -85,18 +115,18 @@ class Expenses extends Component{
                                 onSubmit={this.handleSubmit}>
                             <div><h4>Add a new expense ...</h4></div>
                             <div>
-                            <TextField type="text" id="type" label="Type of expense" onChange={this.handleChange} name="type"/></div>
+                            <TextField type="text" id="expensesType" label="Type of expense" onChange={this.handleChange} name="expensesType"/></div>
                             <div>
                             <TextField type="text" id="amount" label="Amount" onChange={this.handleChange} name="amount"/></div>  
                             <div>
-                            <TextField type="text" id="description" label="Description" onChange={this.handleChange} name="decription"/></div>
+                            <TextField type="text" id="description" label="Description" onChange={this.handleChange} name="description"/></div>
                             <div>
-                            <MaterialUIPickers selected={this.state.date} onChange={this.handleChange}/></div>
+                            <MaterialUIPickers selected={this.state.item.date} onChange={this.handleDateChange} id="date" name="date"/></div>
                         </form>
                          <Button color="primary" variant="outlined" size="small" className={classes.button}
-                         onClick={this.save} type="submit">Save</Button>{' '}
+                                 onClick={this.handleSubmit} type="submit">Save</Button>{' '}
                          <Button color="secondary" variant="outlined" size="small" className={classes.button}
-                         onClick={this.cancelExpense}>Cancel</Button>
+                                 onClick={this.cancelExpense}>Cancel</Button>
                     </Container>
 
                        <h1>Statement of all expenses</h1>
@@ -113,7 +143,7 @@ class Expenses extends Component{
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.state.data.map(expense =>{
+                            {this.state.expenses.map(expense =>{
                                 return(
                                     <TableRow key={expense.id}>
                                         <TableCell component="th" > {expense.id}</TableCell>
