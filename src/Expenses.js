@@ -7,7 +7,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import MenuAppBar from './Components/MenuAppBar'
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {FormGroup,Container, Button, ButtonGroup} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
@@ -36,12 +35,13 @@ const useStyles = makeStyles(theme => ({
 
 class Expenses extends Component{
 
-    emptyItem ={
-                expensesType: "",
-                amount:"",
-                description:"",
-                date:"",
-    }
+    emptyItem =
+        {
+           expensesType: "",
+           amount:"",
+           description:"",
+           date:""
+        };
 
     constructor(props){
         super(props)
@@ -50,18 +50,19 @@ class Expenses extends Component{
             expenses: [],
             isLoaded: false,
             item: this.emptyItem
-            
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
     }
 
+
+    
     async componentDidMount(){
-        const expenses = await request('http://localhost:8080/api/expenses');
+        const body = await request('http://localhost:8080/api/expenses');
         this.setState({
                     isLoaded: true,
-                    expenses: expenses,
+                    expenses: body,
                 });
             }
 
@@ -69,21 +70,18 @@ class Expenses extends Component{
         event.preventDefault();
         const {item}=this.state;
         await request('http://localhost:8080/api/expenses',{
-            body: JSON.stringify({item}),
             method:'POST',
-            headers:{
-                "Content-Type":"application/json"
-            }
+            body: JSON.stringify({item})
         });
         console.log(this.state);
-        this.props.history.push("/expenses")
+        // this.props.history.push("/expenses")
     };       
 
     cancelExpense = () =>document.getElementById("create-expense-form").reset();
 
     handleChange(event){
         const target = event.target;
-        const value = target.value;
+        const value = target.value; 
         const name = target.name;
         let item = {...this.state.item};
         item[name] = value;
@@ -99,7 +97,7 @@ class Expenses extends Component{
     }
 
     render(){
-        var {expenses,isLoaded}= this.state;
+        const {expenses,isLoaded}= this.state;
         const {classes} = this.props;
 
         if(!isLoaded){
