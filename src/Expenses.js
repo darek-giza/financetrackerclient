@@ -35,12 +35,12 @@ const useStyles = makeStyles(theme => ({
 
 class Expenses extends Component{
 
-    emptyItem =
+    emptyExpense =
         {
-           expensesType: "",
-           amount:"",
-           description:"",
-           date:""
+           expensesType: null,
+           amount:null,
+           description:null,
+           date:null
         };
 
     constructor(props){
@@ -49,7 +49,7 @@ class Expenses extends Component{
         this.state={
             expenses: [],
             isLoaded: false,
-            item: this.emptyItem
+            expense: this.emptyExpense
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -66,16 +66,18 @@ class Expenses extends Component{
                 });
             }
 
-    async handleSubmit(event){
-        event.preventDefault();
-        const {item}=this.state;
-        await request('http://localhost:8080/api/expenses',{
-            method:'POST',
-            body: JSON.stringify({item})
-        });
-        console.log(this.state);
-        // this.props.history.push("/expenses")
-    };       
+    handleSubmit = async(event)=>{
+        try{
+                    event.preventDefault();
+                    const {expense} = this.state;
+                    await request('http://localhost:8080/api/expenses',{
+                    method:'POST',
+                    body: JSON.stringify([expense])
+                    })
+                }catch(error){
+                    console.log("Failed",error)
+                }
+                };
 
     cancelExpense = () =>document.getElementById("create-expense-form").reset();
 
@@ -83,17 +85,18 @@ class Expenses extends Component{
         const target = event.target;
         const value = target.value; 
         const name = target.name;
-        let item = {...this.state.item};
-        item[name] = value;
-        this.setState({item});
-        console.log(this.state.item)
+        let expense = {...this.state.expense};
+        expense[name] = value;
+        this.setState({expense});
+    
     }
 
     handleDateChange(date){
-        let item={...this.state.item};
-        item.date = date;
-        this.setState({item});
-        console.log(item)
+        let expense={...this.state.expense};
+        expense.date = date;
+        this.setState({expense});
+
+        console.log(this.state.expense.date)
     }
 
     render(){
@@ -119,7 +122,7 @@ class Expenses extends Component{
                             <div>
                             <TextField type="text" id="description" label="Description" onChange={this.handleChange} name="description"/></div>
                             <div>
-                            <MaterialUIPickers selected={this.state.item.date} onChange={this.handleDateChange} id="date" name="date"/></div>
+                            <MaterialUIPickers selected={this.state.expense.date} onChange={this.handleDateChange} id="date" name="date"/></div>
                         </form>
                          <Button color="primary" variant="outlined" size="small" className={classes.button}
                                  onClick={this.handleSubmit} type="submit">Save</Button>{' '}

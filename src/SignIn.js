@@ -71,17 +71,22 @@ export default function SignIn() {
       
       localStorage.setItem('token',data.token);
       localStorage.setItem('id',data.id)
-      setLoggedIn(true)
-
-
+      if(data.token != null ){
+        setLoggedIn(true)
+      }else{
+        console.log("Token undefined",data.token)
+      }
       }catch(error){
         localStorage.removeItem('token');
         setLoggedIn(false)
+        return <Redirect to="/"/>
+        
       } 
   };
 
 
   return (
+    
     <Container component="main" maxWidth="xs">
       {loggedIn && <Redirect to="/incomes"/>}
       <CssBaseline />
