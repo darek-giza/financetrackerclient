@@ -14,6 +14,7 @@ import {makeStyles, withStyles} from '@material-ui/core/styles';
 import StickyFooter from './StickyFooter';
 import {request} from './request';
 import MaterialUIPickers from "./MaterialUIPickers"
+import moment from "moment"
 
 
 const useStyles = makeStyles(theme => ({
@@ -40,7 +41,7 @@ class Expenses extends Component{
            expensesType: null,
            amount:null,
            description:null,
-           date:null
+           date:new Date()
         };
 
     constructor(props){
@@ -54,26 +55,32 @@ class Expenses extends Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
+        this.getExpenses = this.getExpenses.bind(this);
     }
 
-
+    getExpenses = async()=>{
+        const body = await request('http://localhost:8080/api/expenses');
+            this.setState({
+                        isLoaded: true,
+                        expenses: body,
+                    });
+    }
     
     async componentDidMount(){
-        const body = await request('http://localhost:8080/api/expenses');
-        this.setState({
-                    isLoaded: true,
-                    expenses: body,
-                });
+                this.getExpenses();
             }
 
     handleSubmit = async(event)=>{
         try{
                     event.preventDefault();
-                    const {expense} = this.state;
+                    let expense = this.state.expense;
+                    expense.date= moment(expense.date).format("YYYY-MM-DD");
                     await request('http://localhost:8080/api/expenses',{
                     method:'POST',
                     body: JSON.stringify([expense])
                     })
+                    this.getExpenses();
+                    this.cancelExpense();
                 }catch(error){
                     console.log("Failed",error)
                 }
@@ -95,8 +102,6 @@ class Expenses extends Component{
         let expense={...this.state.expense};
         expense.date = date;
         this.setState({expense});
-
-        console.log(this.state.expense.date)
     }
 
     render(){
@@ -136,22 +141,20 @@ class Expenses extends Component{
                     <Table size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
-                                <TableCell >#</TableCell>
-                                <TableCell >Type of expenses</TableCell>
-                                <TableCell >Amount</TableCell>
-                                <TableCell >Description</TableCell>
                                 <TableCell >Date</TableCell>
+                                <TableCell >Type of expenses</TableCell>
+                                <TableCell >Description</TableCell>
+                                <TableCell >Amount</TableCell> 
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {this.state.expenses.map(expense =>{
                                 return(
                                     <TableRow key={expense.id}>
-                                        <TableCell component="th" > {expense.id}</TableCell>
+                                        <TableCell>{moment(expense.date).format("DD-MM-YYYY")}</TableCell>
                                         <TableCell>{expense.expensesType}</TableCell>
-                                        <TableCell>{expense.amount}</TableCell>
                                         <TableCell>{expense.description}</TableCell>
-                                        <TableCell>{expense.date}</TableCell>
+                                        <TableCell>{expense.amount}</TableCell>
                                     </TableRow>
                                 )})}
                         </TableBody>
