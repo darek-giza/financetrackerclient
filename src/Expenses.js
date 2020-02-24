@@ -82,7 +82,7 @@ class Expenses extends Component{
                     this.getExpenses();
                     this.cancelExpense();
                 }catch(error){
-                    console.log("Failed",error)
+                    console.log("Adding expense failed",error)
                 }
                 };
 
@@ -152,7 +152,8 @@ class Expenses extends Component{
                                 return(
                                     <TableRow key={expense.id}>
                                         <TableCell>{moment(expense.date).format("DD-MM-YYYY")}</TableCell>
-                                        <TableCell>{expense.expensesType}</TableCell>
+                                        <TableCell>{expense.date}</TableCell>
+                                        {/* <TableCell>{expense.expensesType}</TableCell> */}
                                         <TableCell>{expense.description}</TableCell>
                                         <TableCell>{expense.amount}</TableCell>
                                     </TableRow>
