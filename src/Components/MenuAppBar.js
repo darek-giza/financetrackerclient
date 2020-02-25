@@ -38,6 +38,7 @@ export default function MenuAppBar() {
           <Button href='/user'>User</Button>
           <Button href='/incomes'>Incomes</Button>
           <Button href='/expenses'>Expenses</Button>
+          <Button href='/type'>Expenses type</Button>
           <Button href='/logout'>Logout</Button>
           </ButtonGroup>
           </div>
