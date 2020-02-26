@@ -16,13 +16,6 @@ import {request} from './request';
 import MaterialUIPickers from "./MaterialUIPickers"
 import moment from "moment"
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
 
 
 const useStyles = makeStyles(theme => ({
@@ -44,17 +37,8 @@ const useStyles = makeStyles(theme => ({
   cont: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
   },
-  list: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
 }));
 
-function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
-  }
-  
 class Expenses extends Component{
 
     emptyExpense =
@@ -64,25 +48,19 @@ class Expenses extends Component{
            description:null,
            date:new Date()
         };
-    emptyType={
-            description: null,
-        };
 
     constructor(props){
         super(props)
 
         this.state={
             expenses: [],
-            types: [],
             isLoaded: false,
-            expense: this.emptyExpense,
-            type: this.emptyType
+            expense: this.emptyExpense
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.getExpenses = this.getExpenses.bind(this);
-        this.getTypes = this.getTypes.bind(this);
     }
 
     getExpenses = async()=>{
@@ -92,17 +70,9 @@ class Expenses extends Component{
                         expenses: body,
                     });
     }
-    getTypes = async()=>{
-        const types = await request('http://localhost:8080/api/type');
-        this.setState({
-                    isLoaded: true,
-                    types : types,
-                });                     
-    }
     
     async componentDidMount(){
                 this.getExpenses();
-                this.getTypes();
             }
 
     handleSubmit = async(event)=>{
@@ -122,7 +92,6 @@ class Expenses extends Component{
                 };
 
     cancelExpense = () =>document.getElementById("create-expense-form").reset();
-    cancelTypes = () =>document.getElementById("create-type-form").reset();
 
     handleChange(event){
         const target = event.target;
@@ -179,11 +148,6 @@ class Expenses extends Component{
                                             </Container>
                                             </Paper>
                                             </Grid>
-
-
-
-
-
                             <Grid item xs={12} sm={6}>
                             <Paper className={classes.paper}>
                                                      <h1>Statement of all expenses</h1>
@@ -212,50 +176,6 @@ class Expenses extends Component{
                                                     </TableContainer>
                             </Paper>
                             </Grid>
-
-
-
-                            <Grid item xs={6} sm={3}>
-                            <Paper className={classes.paper}>
-                                            <Container className={classes.cont} maxWidth="sm">
-                                                <form className={classes.root} noValidate autoComplete="off" id="create-type-form"
-                                                        onSubmit={this.handleSubmit}>
-                                                        <div><h4>Add a new type ...</h4></div>
-                                                        <TextField type="text" id="description" label="Description" onChange={this.handleChange} name="description"/>
-                                                </form>
-                                                        <Button color="primary" variant="outlined" size="small" className={classes.button}
-                                                                onClick={this.handleSubmit} type="submit">Save</Button>{' '}
-                                                        <Button color="secondary" variant="outlined" size="small" className={classes.button}
-                                                                onClick={this.cancelTypes}>Cancel</Button>
-                                            </Container>
-
-                                            <div className={classes.list}>
-                                    <List component="nav" aria-label="main mailbox folders">
-                                        <ListItem button>
-                                        <ListItemIcon>
-                                            <InboxIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Inbox" />
-                                        </ListItem>
-                                        <ListItem button>
-                                        <ListItemIcon>
-                                            <DraftsIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Drafts" />
-                                        </ListItem>
-                                    </List>
-                            
-                            </div>
-
-
-
-                            </Paper>
-                            </Grid>
-                            
-                            
-                           
-
-                           
                         </Grid>
                 </div>    
                  <StickyFooter/>

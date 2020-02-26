@@ -1,36 +1,41 @@
-import React, { Component } from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import React, {Component} from 'react';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import MenuAppBar from './Components/MenuAppBar'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import StickyFooter from './StickyFooter';
 import {request} from './request';
 import TextField from '@material-ui/core/TextField';
 import {Button, Container} from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
+import FaceIcon from '@material-ui/icons/Face';
+import DoneIcon from '@material-ui/icons/Done';
+import Grid from '@material-ui/core/Grid';
 
 
-const useStyles = makeStyles(theme=>({
+const useStyles = makeStyles(theme => ({
     root: {
         '& > *': {
-          margin: theme.spacing(1),
-          width: 200,
+            margin: theme.spacing(10),
+            width: 200,
         },
-    },
-    table: {
-      minWidth: 650,
+        flexGrow: 100,
     },
     button: {
-        margin: theme.spacing(2),
+        margin: theme.spacing(10),
     },
     cont: {
-      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     },
-  }));
+    chip: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+    },
+}));
+
 
 class Types extends Component {
 
@@ -76,68 +81,88 @@ class Types extends Component {
 
     };
 
-
-    handleChange(event){
+    handleChange(event) {
         const target = event.target;
-        const value  = target.value;
+        const value = target.value;
         const name = target.name;
-        let types ={...this.state.types};
+        let types = {...this.state.types};
         types[name] = value;
         this.setState({types});
-        }
+    }
 
-    cancelTypes = () =>document.getElementById("create-type-form").reset();
+    handleClick = () => {
+        console.info('You clicked the Chip.');
+    };
 
-    render(){
+    handleDelete = () => {
+        console.info('You clicked the delete icon.');
+    };
+
+    cancelTypes = () => document.getElementById("create-type-form").reset();
+
+    render() {
         var {isLoaded, incomes} = this.state;
 
         const {classes} = this.props;
-   
-        if(!isLoaded){
+
+        if (!isLoaded) {
             return <div>Loading ...</div>
-        }else {
+        } else {
 
-        return(
-        <React.Fragment>
-                <MenuAppBar/>
+            return (
+                <React.Fragment>
+                    <MenuAppBar/>
+                    <div className={classes.root}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={6} sm={3}>
+                                <Paper className={classes.paper}>
+                                    <Container className={classes.cont} maxWidth="sm">
+                                        <form className={classes.root} noValidate autoComplete="off"
+                                              id="create-type-form"
+                                              onSubmit={this.handleSubmit}>
+                                            <div><h4>Add a new type ...</h4></div>
+                                            <TextField type="text" id="description" label="Description"
+                                                       onChange={this.handleChange} name="description"/>
+                                        </form>
+                                        <Button color="primary" variant="outlined" size="small"
+                                                className={classes.button}
+                                                onClick={this.handleSubmit} type="submit">Save</Button>{' '}
+                                        <Button color="secondary" variant="outlined" size="small"
+                                                className={classes.button}
+                                                onClick={this.cancelTypes}>Cancel</Button>
+                                    </Container>
 
-               <Container className={classes.cont} maxWidth="sm">
-                        <form className={classes.root} noValidate autoComplete="off" id="create-type-form"
-                                onSubmit={this.handleSubmit}>
-                                <div><h4>Add a new type ...</h4></div>
-                                <TextField type="text" id="description" label="Description" onChange={this.handleChange} name="description"/>
-                        </form>
-                                <Button color="primary" variant="outlined" size="small" className={classes.button}
-                                        onClick={this.handleSubmit} type="submit">Save</Button>{' '}
-                                <Button color="secondary" variant="outlined" size="small" className={classes.button}
-                                        onClick={this.cancelTypes}>Cancel</Button>
-                </Container>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={6} sm={3}>
+                                <h4>All types of expenses you have</h4>
+                                <Paper className={classes.paper}>
+                                    <div className={classes.chip}>
+                                        <Chip variant="outlined" color="secondary" size="small" label="Expenses types"/>
+                                        {this.state.types.map(type => {
+                                            return (
+                                                <Chip
+                                                    variant="outlined"
+                                                    size="small"
+                                                    icon={<FaceIcon/>}
+                                                    label={type.description}
+                                                    clickable
+                                                    color="primary"
+                                                    deleteIcon={<DoneIcon/>}
+                                                />
+                                            )
+                                        })}
+                                    </div>
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    <StickyFooter/>
+                </React.Fragment>
 
-             <h1>Statement of all expense types</h1>
-                <TableContainer component={Paper}>
-                    <Table size="small" aria-label="a dense table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell >Id</TableCell>
-                                <TableCell >Description</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                               {this.state.types.map(type =>{
-                                    return(
-                                        <TableRow key={type.id}>
-                                            <TableCell>{type.id}</TableCell>
-                                            <TableCell>{type.description}</TableCell>
-                                        </TableRow>
-                                    )})}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            <StickyFooter/>  
-        </React.Fragment>  
-        )}}
 
+            )
+        }
+    }
 }
-    
-
 export default withStyles(useStyles)(Types)
