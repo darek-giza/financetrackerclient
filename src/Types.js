@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 100,
     },
     button: {
-        margin: theme.spacing(10),
+        margin: theme.spacing(0),
     },
     cont: {
         background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -90,18 +90,10 @@ class Types extends Component {
         this.setState({types});
     }
 
-    handleClick = () => {
-        console.info('You clicked the Chip.');
-    };
-
-    handleDelete = () => {
-        console.info('You clicked the delete icon.');
-    };
-
     cancelTypes = () => document.getElementById("create-type-form").reset();
 
     render() {
-        var {isLoaded, incomes} = this.state;
+        var {isLoaded,types} = this.state;
 
         const {classes} = this.props;
 
@@ -121,8 +113,9 @@ class Types extends Component {
                                               id="create-type-form"
                                               onSubmit={this.handleSubmit}>
                                             <div><h4>Add a new type ...</h4></div>
+                                            <div>
                                             <TextField type="text" id="description" label="Description"
-                                                       onChange={this.handleChange} name="description"/>
+                                                       onChange={this.handleChange} name="description"/></div>
                                         </form>
                                         <Button color="primary" variant="outlined" size="small"
                                                 className={classes.button}
@@ -139,7 +132,7 @@ class Types extends Component {
                                 <Paper className={classes.paper}>
                                     <div className={classes.chip}>
                                         <Chip variant="outlined" color="secondary" size="small" label="Expenses types"/>
-                                        {this.state.types.map(type => {
+                                        {types.map(type => {
                                             return (
                                                 <Chip
                                                     variant="outlined"
