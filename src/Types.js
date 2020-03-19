@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import MenuAppBar from './Components/MenuAppBar'
+import Dashboard from './Dashboard/Dashboard'
 import Paper from '@material-ui/core/Paper';
 import StickyFooter from './StickyFooter';
 import {request} from './request';
@@ -103,7 +104,8 @@ class Types extends Component {
 
             return (
                 <React.Fragment>
-                    <MenuAppBar/>
+                    {/*<MenuAppBar/>*/}
+                    <Dashboard/>
                     <div className={classes.root}>
                         <Grid container spacing={3}>
                             <Grid item xs={6} sm={3}>
