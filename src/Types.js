@@ -47,10 +47,11 @@ class Types extends Component {
     constructor(props) {
         super(props);
             this.state={
-                types : [],
+                types: [],
                 isLoaded: false,
-                type: this.emptyType
-                }
+                type: this.emptyType,
+                description: ''
+            };
             this.handleSubmit = this.handleSubmit.bind(this);
             this.handleChange = this.handleChange.bind(this);
             this.getTypes = this.getTypes.bind(this);
@@ -69,10 +70,10 @@ class Types extends Component {
     handleSubmit = async(event)=>{
         try{
             event.preventDefault();
-            let types = this.state.types;
+            const { description } = this.state;
             await request('http://localhost:8080/api/type',{
                 method: 'POST',
-                body: JSON.stringify(types)
+                body: JSON.stringify({ description })
             })
             this.getTypes();
             this.cancelTypes();
@@ -84,17 +85,14 @@ class Types extends Component {
 
     handleChange(event) {
         const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        let types = {...this.state.types};
-        types[name] = value;
-        this.setState({types});
+
+        this.setState({ [target.name]: target.value });
     }
 
     cancelTypes = () => document.getElementById("create-type-form").reset();
 
     render() {
-        var {isLoaded,types} = this.state;
+        var {isLoaded, types} = this.state;
 
         const {classes} = this.props;
 
@@ -102,6 +100,7 @@ class Types extends Component {
             return <div>Loading ...</div>
         } else {
 
+            console.log(types);
             return (
                 <React.Fragment>
                     {/*<MenuAppBar/>*/}
