@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,57 +12,53 @@ import StickyFooter from './StickyFooter';
 import { request } from './request';
 import Grid from '@material-ui/core/Grid';
 
-class User extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      user: [],
-      isLoaded: false,
-    };
-  }
+export const User = () => {
+  const [user, setUser] = useState();
+  const [isLoaded, setLoaded] = useState(false);
 
-  async componentDidMount() {
+
+  const fetchUser = useCallback(async () => {
     const user = await request('http://localhost:8080/api/user');
-    this.setState({
-      isLoaded: true,
-      user: user,
-    });
+    setUser(user);
+    setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  if (!isLoaded) {
+    return "... is loading";
   }
 
-  render() {
-    var { isLoaded, user } = this.state;
-
-    if (!isLoaded) {
-      return <div>Loading ...</div>;
-    } else {
-      return (
-        <React.Fragment>
-          <MenuAppBar />
-          <Grid container spacing={3}>
-            <Grid item xs={6} sm={3}>
-              <h1>User data</h1>
-              <TableContainer component={Paper}>
-                <Table size="small" aria-label="a dense table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Email</TableCell>
-                      <TableCell>Balance</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow key={user.id}>
-                      <TableCell>{user.username}</TableCell>
-                      <TableCell>{user.email}</TableCell>
-                      <TableCell>{user.budget.balance}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-                <Button variant="outlined" size="large">
-                  Edit
-                </Button>
-              </TableContainer>
-            </Grid>
+  return (
+    <React.Fragment>
+      <MenuAppBar/>
+      <Grid container spacing={3}>
+        <Grid item xs={6} sm={3}>
+          <h1>User data</h1>
+          <TableContainer component={Paper}>
+            <Table size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Balance</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow key={user.id}>
+                  <TableCell>{user.username}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.budget.balance}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+            <Button variant="outlined" size="large">
+              Edit
+            </Button>
+          </TableContainer>
+        </Grid>
             <Grid item xs={12} sm={6}>
               <TableContainer>
                 <h4>List of amounts of your recent expenses</h4>
@@ -83,11 +79,11 @@ class User extends Component {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {user.budget.expense.map(e => {
+                    {user.budget.expense.map(item => {
                       return (
-                        <TableRow key={e.id}>
-                          <TableCell>{e.expenseType.description} </TableCell>
-                          <TableCell>{e.amount} </TableCell>
+                        <TableRow key={item.id}>
+                          <TableCell>{item.expenseType.description} </TableCell>
+                          <TableCell>{item.amount} </TableCell>
                         </TableRow>
                       );
                     })}
@@ -115,11 +111,11 @@ class User extends Component {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {user.budget.incomes.map(i => {
+                    {user.budget.incomes.map(item => {
                       return (
-                        <TableRow key={i.id}>
-                          <TableCell>{i.description}</TableCell>
-                          <TableCell>{i.amount} </TableCell>
+                        <TableRow key={item.id}>
+                          <TableCell>{item.description}</TableCell>
+                          <TableCell>{item.amount} </TableCell>
                         </TableRow>
                       );
                     })}
@@ -127,12 +123,10 @@ class User extends Component {
                 </Table>
               </TableContainer>
             </Grid>
-          </Grid>
-          <StickyFooter />
-        </React.Fragment>
-      );
-    }
-  }
-}
+      </Grid>
+      <StickyFooter/>
+    </React.Fragment>
+  );
+};
 
 export default User;

@@ -9,6 +9,7 @@ import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
 import DoneIcon from '@material-ui/icons/Done';
 import Grid from '@material-ui/core/Grid';
+import Dashboard from "./Dashboard/Dashboard";
 
 
 const useStyles = makeStyles(theme => ({
@@ -36,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Types = (props) => {
-  const {classes} = props
+  const {classes} = props;
   const [types, setTypes] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
   const [description, setDescription] = useState('');
@@ -80,7 +81,7 @@ export const Types = (props) => {
   return (
     <React.Fragment>
       {/*<MenuAppBar/>*/}
-      {/*<Dashboard />*/}
+      <Dashboard />
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={6} sm={3}>
