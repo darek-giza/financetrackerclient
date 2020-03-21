@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { request } from './request';
+import { request } from '../utils/request';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import MenuAppBar from './Components/MenuAppBar';
+import MenuAppBar from '../components/MenuAppBar';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,12 +8,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import StickyFooter from './StickyFooter';
+import StickyFooter from '../components/StickyFooter';
 import Moment from 'react-moment';
-import { request } from './request';
+import { request } from '../utils/request';
 import TextField from '@material-ui/core/TextField';
 import { Button, Container } from '@material-ui/core';
-import MaterialUIPickers from './MaterialUIPickers';
+import MaterialUIPickers from '../components/MaterialUIPickers';
 import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
@@ -34,10 +34,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const Incomes = (props) => {
-  const {classes} = props;
+export const Incomes = props => {
+  const { classes } = props;
   const [isLoaded, setLoaded] = useState(false);
-  const [income, setIncome] = useState({description: null, amount: null, date: new Date()});
+  const [income, setIncome] = useState({
+    description: null,
+    amount: null,
+    date: new Date(),
+  });
   const [incomes, setIncomes] = useState([]);
 
   const fetchIncomes = useCallback(async () => {
@@ -50,42 +54,49 @@ export const Incomes = (props) => {
     document.getElementById('create-income-form').reset();
   }, []);
 
+  const handleSubmit = useCallback(
+    async event => {
+      try {
+        event.preventDefault();
+        income.date = moment(income.date).format('YYYY-MM-DD');
+        await request('http://localhost:8080/api/incomes', {
+          method: 'POST',
+          body: JSON.stringify([income]),
+        });
+        await fetchIncomes();
+        cancelIncomes();
+      } catch (error) {
+        console.log('Adding income failed', error);
+      }
+    },
+    [income]
+  );
 
-  const handleSubmit = useCallback(async (event) => {
-    try {
-      event.preventDefault();
-      income.date = moment(income.date).format('YYYY-MM-DD');
-      await request('http://localhost:8080/api/incomes', {
-        method: 'POST',
-        body: JSON.stringify([income]),
-      });
-      await fetchIncomes();
-      cancelIncomes();
-    } catch (error) {
-      console.log('Adding income failed', error);
-    }
-  }, [income]);
+  const handleChange = useCallback(
+    event => {
+      setIncome({ ...income, [event.target.name]: event.target.value });
+    },
+    [income]
+  );
 
-  const handleChange = useCallback((event) => {
-    setIncome({...income, [event.target.name]: event.target.value});
-  }, [income]);
-
-  const handleDateChange = useCallback((date) => {
-    setIncome({...income, date});
-  }, [income]);
+  const handleDateChange = useCallback(
+    date => {
+      setIncome({ ...income, date });
+    },
+    [income]
+  );
 
   useEffect(() => {
     fetchIncomes();
   }, []);
 
-
   if (isLoaded !== true) {
-    return "... is loading";
+    return '... is loading';
   }
 
   return (
     <React.Fragment>
-      <MenuAppBar/>
+      <MenuAppBar />
       <Container className={classes.cont} maxWidth="sm">
         <form
           className={classes.root}
@@ -168,7 +179,7 @@ export const Incomes = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <StickyFooter/>
+      <StickyFooter />
     </React.Fragment>
   );
 };

@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import User from './User';
-import Home from './Home';
-import Incomes from './Incomes';
-import Expenses from './Expenses';
-import Types from './Types';
-import SignIn from './SignIn';
-import Logout from './Logout';
-import Signup from './Signup';
+import User from './pages/User';
+import Home from './pages/Home';
+import Incomes from './pages/Incomes';
+import Expenses from './pages/Expenses';
+import Types from './pages/Types';
+import SignIn from './pages/SignIn';
+import Logout from './pages/Logout';
+import Signup from './pages/Signup';
 
 
 const App = () => (

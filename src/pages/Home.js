@@ -7,7 +7,7 @@ const styles = {
   intro: {
     width: 'auto',
     height: '1024px',
-    backgroundImage: 'url(' + require('./Images/intro_image.jpg') + ')',
+    backgroundImage: 'url(' + require('../images/intro_image.jpg') + ')',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     color: lightblue[200],
@@ -30,10 +30,10 @@ const styles = {
   },
 };
 
-const Home = ({classes}) => (
+const Home = ({ classes }) => (
   <div className={classes.intro}>
     <span>Finance tracker</span>
-    <br/>
+    <br />
     <Link href="/signin" className={classes.link} color="primary">
       Log in here ..
     </Link>
