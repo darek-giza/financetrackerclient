@@ -8,10 +8,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary">
       {'Copyright © '}
-      <Link color="inherit">
-        Dariusz Giza
-      </Link>{' '}
-      {new Date().getFullYear()}
+      <Link color="inherit">Dariusz Giza</Link> {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
@@ -30,10 +27,12 @@ const useStyles = makeStyles(theme => ({
   footer: {
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
-    textAlign: "center",
-    
+    textAlign: 'center',
+
     backgroundColor:
-      theme.palette.type === 'dark' ? theme.palette.grey[800] : theme.palette.grey[200],
+      theme.palette.type === 'dark'
+        ? theme.palette.grey[800]
+        : theme.palette.grey[200],
   },
 }));
 

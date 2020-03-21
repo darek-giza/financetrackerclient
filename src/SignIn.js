@@ -1,5 +1,5 @@
-import React,{useState, useEffect} from 'react';
-import {request} from './request';
+import React, { useState, useEffect } from 'react';
+import { request } from './request';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,10 +19,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit">
-        Dariusz Giza
-      </Link>{' '}
-      {new Date().getFullYear()}
+      <Link color="inherit">Dariusz Giza</Link> {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
@@ -53,42 +50,39 @@ export default function SignIn() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
- 
-  const onUsernameChange = (event) => {
-    setUsername(event.target.value);
-  }
 
-  const onPasswordChange = (event) =>{
-    setPassword(event.target.value);
-  }
-    
-  const login = async() => {
-    try{ 
-      const data = await request('http://localhost:8080/authenticate',{
-        body: JSON.stringify({username, password}),
-        method: 'POST' 
-      });
-      
-      localStorage.setItem('token',data.token);
-      localStorage.setItem('id',data.id)
-      if(data.token != null ){
-        setLoggedIn(true)
-      }else{
-        console.log("Token undefined",data.token)
-      }
-      }catch(error){
-        localStorage.removeItem('token');
-        setLoggedIn(false)
-        return <Redirect to="/"/>
-        
-      } 
+  const onUsernameChange = event => {
+    setUsername(event.target.value);
   };
 
+  const onPasswordChange = event => {
+    setPassword(event.target.value);
+  };
+
+  const login = async () => {
+    try {
+      const data = await request('http://localhost:8080/authenticate', {
+        body: JSON.stringify({ username, password }),
+        method: 'POST',
+      });
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('id', data.id);
+      if (data.token != null) {
+        setLoggedIn(true);
+      } else {
+        console.log('Token undefined', data.token);
+      }
+    } catch (error) {
+      localStorage.removeItem('token');
+      setLoggedIn(false);
+      return <Redirect to="/" />;
+    }
+  };
 
   return (
-    
     <Container component="main" maxWidth="xs">
-      {loggedIn && <Redirect to="/incomes"/>}
+      {loggedIn && <Redirect to="/incomes" />}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

@@ -27,20 +27,25 @@ export default function MenuAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
             <MenuIcon />
           </IconButton>
           <Typography variant="h4" className={classes.title}>
             Finance Tracker
           </Typography>
           <div className={classes.menuButton}>
-          <ButtonGroup  color="inherit" variant="outlined" size="small">
-          <Button href='/user'>User</Button>
-          <Button href='/incomes'>Incomes</Button>
-          <Button href='/expenses'>Expenses</Button>
-          <Button href='/type'>Expenses type</Button>
-          <Button href='/logout'>Logout</Button>
-          </ButtonGroup>
+            <ButtonGroup color="inherit" variant="outlined" size="small">
+              <Button href="/user">User</Button>
+              <Button href="/incomes">Incomes</Button>
+              <Button href="/expenses">Expenses</Button>
+              <Button href="/type">Expenses type</Button>
+              <Button href="/logout">Logout</Button>
+            </ButtonGroup>
           </div>
         </Toolbar>
       </AppBar>

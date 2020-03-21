@@ -8,13 +8,11 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-export default function MaterialUIPickers({selected,onChange}) {
-  
+export default function MaterialUIPickers({ selected, onChange }) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="flex-start">
         <KeyboardDatePicker
-          
           margin="normal"
           id="date-picker-dialog"
           label="Date"

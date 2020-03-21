@@ -19,7 +19,6 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-
   },
 }));
 
@@ -33,10 +32,15 @@ export default function MenuAppBar() {
           <Typography variant="h4" className={classes.title}>
             Finance Tracker
           </Typography>
-              <ButtonGroup className={classes.menuButton} color="inherit" variant="outlined" size="small">
-                    <Button href='/signin' >Sign in</Button>
-                    <Button href='/signup'>Sign up</Button>
-              </ButtonGroup>
+          <ButtonGroup
+            className={classes.menuButton}
+            color="inherit"
+            variant="outlined"
+            size="small"
+          >
+            <Button href="/signin">Sign in</Button>
+            <Button href="/signup">Sign up</Button>
+          </ButtonGroup>
         </Toolbar>
       </AppBar>
     </div>
