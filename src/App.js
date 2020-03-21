@@ -10,20 +10,21 @@ import SignIn from './pages/SignIn';
 import Logout from './pages/Logout';
 import Signup from './pages/Signup';
 import Dashboard from './components/Dashboard'
+import 'typeface-roboto'
 
 
 const App = () => (
   <Router>
     <Dashboard>
       <Switch>
-        <Route path="/" exact={true} component={Home}></Route>
-        <Route path="/user" exact={true} component={User}></Route>
-        <Route path="/incomes" exact={true} component={Incomes}></Route>
-        <Route path="/expenses" exact={true} component={Expenses}></Route>
-        <Route path="/type" exact={true} component={Types}></Route>
-        <Route path="/signin" exact={true} component={SignIn}></Route>
-        <Route path="/signup" exact={true} component={Signup}></Route>
-        <Route path="/logout" exact={true} component={Logout}></Route>
+        <Route path="/" exact={true} component={Home}/>
+        <Route path="/user" exact={true} component={User}/>
+        <Route path="/incomes" exact={true} component={Incomes}/>
+        <Route path="/expenses" exact={true} component={Expenses}/>
+        <Route path="/type" exact={true} component={Types}/>
+        <Route path="/signin" exact={true} component={SignIn}/>
+        <Route path="/signup" exact={true} component={Signup}/>
+        <Route path="/logout" exact={true} component={Logout}/>
       </Switch>
     </Dashboard>
   </Router>

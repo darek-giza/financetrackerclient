@@ -42,7 +42,7 @@ export const mainListItems = (
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Type of Expenses" />
+      <ListItemText primary="Expense types" />
     </ListItem>
     </Link>
     <Link to="/user">

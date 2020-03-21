@@ -7,32 +7,28 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 
 export const UserData = ({ user }) => (
-  <Grid item xs={6} sm={3}>
-    <h1>User data</h1>
-    <TableContainer component={Paper}>
-      <Table size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Balance</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow key={user.id}>
-            <TableCell>{user.username}</TableCell>
-            <TableCell>{user.email}</TableCell>
-            <TableCell>{user.budget.balance}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-      <Button variant="outlined" size="large">
-        Edit
-      </Button>
-    </TableContainer>
-  </Grid>
+  <TableContainer component={Paper}>
+    <Table size="small" aria-label="a dense table">
+      <TableHead>
+        <TableRow>
+          <TableCell>Name</TableCell>
+          <TableCell>Email</TableCell>
+          <TableCell>Balance</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        <TableRow key={user.id}>
+          <TableCell>{user.username}</TableCell>
+          <TableCell>{user.email}</TableCell>
+          <TableCell>{user.budget.balance}</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+    <Button variant="outlined" size="large">
+      Edit
+    </Button>
+  </TableContainer>
 );
 export default UserData;

@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
-import Grid from '@material-ui/core/Grid';
 import FaceIcon from '@material-ui/icons/Face';
-import DoneIcon from '@material-ui/icons/Done';
 import { request } from '../utils/request';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
   const [types, setTypes] = useState([]);
@@ -28,32 +26,21 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
   }
 
   return (
-    <Grid item xs={6} sm={3}>
-      <h4>All types of expenses you have</h4>
-      <Paper>
-        <div>
+    <div>
+      {types.map(type => {
+        return (
           <Chip
-            variant="outlined"
-            color="secondary"
+            onDelete={() => {}}
+            // variant="outlined"
             size="small"
-            label="Expenses types"
+            icon={<ChevronRightIcon />}
+            label={type.description}
+            clickable
+            color="primary"
           />
-          {types.map(type => {
-            return (
-              <Chip
-                variant="outlined"
-                size="small"
-                icon={<FaceIcon />}
-                label={type.description}
-                clickable
-                color="primary"
-                deleteIcon={<DoneIcon />}
-              />
-            );
-          })}
-        </div>
-      </Paper>
-    </Grid>
+        );
+      })}
+    </div>
   );
 };
 export default ExpenseTypeList;

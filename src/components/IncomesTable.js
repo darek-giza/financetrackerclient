@@ -31,33 +31,30 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
   }
 
   return (
-    <React.Fragment>
-      <h1>Statement of all incomes</h1>
-      <TableContainer component={Paper}>
-        <Table size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell align="right">Amount</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {incomes.map(income => {
-              return (
-                <TableRow key={income.id}>
-                  <TableCell>
-                    <Moment format="DD-MM-YYYY">{income.date}</Moment>
-                  </TableCell>
-                  <TableCell>{income.description}</TableCell>
-                  <TableCell align="right">{income.amount}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </React.Fragment>
+    <TableContainer component={Paper}>
+      <Table size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Date</TableCell>
+            <TableCell>Description</TableCell>
+            <TableCell align="right">Amount</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {incomes.map(income => {
+            return (
+              <TableRow key={income.id}>
+                <TableCell>
+                  <Moment format="DD-MM-YYYY">{income.date}</Moment>
+                </TableCell>
+                <TableCell>{income.description}</TableCell>
+                <TableCell align="right">{income.amount}</TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 export default IncomesTable;

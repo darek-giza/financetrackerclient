@@ -56,9 +56,6 @@ export const Incomes = ({ onAdd }) => {
         id="create-income-form"
         onSubmit={handleSubmit}
       >
-        <div>
-          <h4>Add a new income ...</h4>
-        </div>
         <TextField
           type="text"
           id="description"

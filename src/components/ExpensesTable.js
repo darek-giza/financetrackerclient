@@ -33,37 +33,32 @@ export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
   }
 
   return (
-    <Grid item xs={12} sm={6}>
-      <Paper>
-        <h1>Statement of all expenses</h1>
-        <TableContainer component={Paper}>
-          <Table size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Type of expenses</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Amount</TableCell>
+    <TableContainer component={Paper}>
+      <Table size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Date</TableCell>
+            <TableCell>Type of expenses</TableCell>
+            <TableCell>Description</TableCell>
+            <TableCell>Amount</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {expenses.map(expense => {
+            return (
+              <TableRow key={expense.id}>
+                <TableCell>
+                  {moment(expense.date).format('DD-MM-YYYY')}
+                </TableCell>
+                <TableCell>{expense.expenseType.description}</TableCell>
+                <TableCell>{expense.description}</TableCell>
+                <TableCell>{expense.amount}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {expenses.map(expense => {
-                return (
-                  <TableRow key={expense.id}>
-                    <TableCell>
-                      {moment(expense.date).format('DD-MM-YYYY')}
-                    </TableCell>
-                    <TableCell>{expense.expenseType.description}</TableCell>
-                    <TableCell>{expense.description}</TableCell>
-                    <TableCell>{expense.amount}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </Grid>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 export default ExpenseTable;
