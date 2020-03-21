@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import MenuAppBar from '../components/MenuAppBar';
 import IncomesForm from '../components/IncomesForm';
-import IncomesList from '../components/IncomesList';
+import IncomesList from '../components/IncomesTable';
 
 export const Incomes = () => {
   const [refresh, setRefresh] = useState(true);

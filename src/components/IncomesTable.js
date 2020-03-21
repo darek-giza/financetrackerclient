@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Moment from 'react-moment';
 import { request } from '../utils/request';
 
-export const Incomes = ({ shouldRefresh, onRefresh }) => {
+export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
   const [isLoaded, setLoaded] = useState(false);
   const [incomes, setIncomes] = useState([]);
 
@@ -60,4 +60,4 @@ export const Incomes = ({ shouldRefresh, onRefresh }) => {
     </React.Fragment>
   );
 };
-export default Incomes;
+export default IncomesTable;
