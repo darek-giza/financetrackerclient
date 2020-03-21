@@ -16,6 +16,7 @@
     "material-ui-icons": "^1.0.0-beta.36",
     "material-ui-image": "^3.2.2",
     "moment": "^2.24.0",
+    "pre-commit": "^1.2.2",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-datepicker": "^2.11.0",
@@ -29,8 +30,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier --write ./src/**/*.js"
+    "prettier": "prettier --write ./src/**/*.js && git add ."
   },
+  "pre-commit": ["prettier"],
   "proxy": "http://loclhost:8080",
   "eslintConfig": {
     "extends": "react-app"
