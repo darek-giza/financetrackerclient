@@ -19,7 +19,7 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
   useEffect(() => {
     if (shouldRefresh) {
       fetchTypes();
-      onRefresh(false);
+      onRefresh();
     }
   }, [shouldRefresh]);
 
