@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import MenuAppBar from '../components/MenuAppBar';
 import IncomesForm from '../components/IncomesForm';
 import IncomesList from '../components/IncomesTable';
 
@@ -15,7 +14,6 @@ export const Incomes = () => {
 
   return (
     <React.Fragment>
-      <MenuAppBar />
       <IncomesForm onAdd={onAdd} />
       <IncomesList shouldRefresh={refresh} onRefresh={onRefresh} />
     </React.Fragment>

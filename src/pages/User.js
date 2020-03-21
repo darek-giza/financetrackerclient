@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import MenuAppBar from '../components/MenuAppBar';
-import StickyFooter from '../components/StickyFooter';
 import UserData from '../components/UserData';
 import UserExpenseList from '../components/UserExpenseList';
 import UserIncomeList from '../components/UserIncomeList';
@@ -26,11 +24,9 @@ export const User = () => {
 
   return (
     <React.Fragment>
-      <MenuAppBar />
       <UserData user={user} />
       <UserExpenseList user={user} />
       <UserIncomeList user={user} />
-      <StickyFooter />
     </React.Fragment>
   );
 };

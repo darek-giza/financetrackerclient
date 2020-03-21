@@ -9,20 +9,23 @@ import Types from './pages/Types';
 import SignIn from './pages/SignIn';
 import Logout from './pages/Logout';
 import Signup from './pages/Signup';
+import Dashboard from './components/Dashboard'
 
 
 const App = () => (
   <Router>
-    <Switch>
-      <Route path="/" exact={true} component={Home}></Route>
-      <Route path="/user" exact={true} component={User}></Route>
-      <Route path="/incomes" exact={true} component={Incomes}></Route>
-      <Route path="/expenses" exact={true} component={Expenses}></Route>
-      <Route path="/type" exact={true} component={Types}></Route>
-      <Route path="/signin" exact={true} component={SignIn}></Route>
-      <Route path="/signup" exact={true} component={Signup}></Route>
-      <Route path="/logout" exact={true} component={Logout}></Route>
-    </Switch>
+    <Dashboard>
+      <Switch>
+        <Route path="/" exact={true} component={Home}></Route>
+        <Route path="/user" exact={true} component={User}></Route>
+        <Route path="/incomes" exact={true} component={Incomes}></Route>
+        <Route path="/expenses" exact={true} component={Expenses}></Route>
+        <Route path="/type" exact={true} component={Types}></Route>
+        <Route path="/signin" exact={true} component={SignIn}></Route>
+        <Route path="/signup" exact={true} component={Signup}></Route>
+        <Route path="/logout" exact={true} component={Logout}></Route>
+      </Switch>
+    </Dashboard>
   </Router>
 );
 export default App;
