@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import MenuAppBar from './Components/MenuAppBar';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -40,105 +40,82 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-class Expenses extends Component {
-  emptyExpense = {
-    expenseType: null,
-    amount: null,
-    description: null,
-    date: new Date(),
-  };
+export const Expenses = (props) => {
+  const {classes} = props;
+  const [expenses, setExpenses] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [isLoaded, setLoaded] = useState(false);
+  const [expense, setExpense] = useState({
+      expenseType: null,
+      amount: null,
+      description: null,
+      date: new Date()
+    }
+  );
 
-  constructor(props) {
-    super(props);
+  const fetchExpenses = useCallback(async () => {
+    const expenses = await request('http://localhost:8080/api/expenses');
+    setExpenses(expenses);
+    setLoaded(true);
+  }, []);
 
-    this.state = {
-      expenses: [],
-      types: [],
-      isLoaded: false,
-      expense: this.emptyExpense,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
-    this.getExpenses = this.getExpenses.bind(this);
-  }
-
-  getExpenses = async () => {
-    const body = await request('http://localhost:8080/api/expenses');
-    this.setState({
-      isLoaded: true,
-      expenses: body,
-    });
-  };
-  getTypes = async () => {
+  const fetchTypes = useCallback(async () => {
     const types = await request('http://localhost:8080/api/type');
-    this.setState({
-      isLoaded: true,
-      types: types,
-    });
-    console.log({ types });
-  };
+    setTypes(types);
+    setLoaded(true);
+  }, []);
 
-  async componentDidMount() {
-    this.getExpenses();
-    this.getTypes();
-  }
+  useEffect(() => {
+    fetchExpenses();
+    fetchTypes();
+  }, []);
 
-  handleSubmit = async event => {
+  const cancelExpense = useCallback(() => {
+    document.getElementById('create-expense-form').reset();
+  }, []);
+
+
+  const handleSubmit = useCallback(async (event) => {
     try {
       event.preventDefault();
-      let expense = this.state.expense;
       expense.date = moment(expense.date).format('YYYY-MM-DD');
-      console.log({ expense });
       await request('http://localhost:8080/api/expenses', {
         method: 'POST',
         body: JSON.stringify([expense]),
       });
-      this.getExpenses();
-      this.cancelExpense();
+      await fetchExpenses();
+      cancelExpense();
     } catch (error) {
       console.log('Adding expense failed', error);
     }
-  };
+  }, [expense]);
 
-  cancelExpense = () => document.getElementById('create-expense-form').reset();
 
-  handleChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-    let expense = { ...this.state.expense };
-    expense[name] = value;
-    this.setState({ expense });
+  const handleChange = useCallback((event) => {
+    setExpense({...expense, [event.target.name]: event.target.value});
+  }, [expense]);
+
+  const handleDateChange = useCallback((date) => {
+    setExpense({...expense, date});
+  }, [expense]);
+
+  if (isLoaded !== true) {
+    return "... is loading";
   }
-
-  handleDateChange(date) {
-    let expense = { ...this.state.expense };
-    expense.date = date;
-    this.setState({ expense });
-  }
-
-  render() {
-    const { expenses, isLoaded, types } = this.state;
-    const { classes } = this.props;
-
-    if (!isLoaded) {
-      return <div>Loading ...</div>;
-    } else {
-      return (
-        <React.Fragment>
-          <MenuAppBar />
-          <div className={classes.root}>
-            <Grid container spacing={3}>
-              <Grid item xs={6} sm={3}>
-                <Paper className={classes.paper}>
-                  <Container className={classes.cont} maxWidth="sm">
-                    <form
-                      className={classes.root}
-                      noValidate
-                      autoComplete="off"
-                      id="create-expense-form"
-                      onSubmit={this.handleSubmit}
+  return (
+    <React.Fragment>
+      <MenuAppBar/>
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          <Grid item xs={6} sm={3}>
+            <Paper className={classes.paper}>
+              <Container className={classes.cont} maxWidth="sm">
+                <form
+                  className={classes.root}
+                  noValidate
+                  autoComplete="off"
+                  id="create-expense-form"
+                  onSubmit={handleSubmit}
                     >
                       <div>
                         <h4>Add a new expense ...</h4>
@@ -151,7 +128,7 @@ class Expenses extends Component {
                           select
                           label="Type of expenses"
                           value={types.description}
-                          onChange={this.handleChange}
+                          onChange={handleChange}
                           helperText="Please select type of your expense"
                         >
                           {types.map(type => (
@@ -166,7 +143,7 @@ class Expenses extends Component {
                           type="text"
                           id="amount"
                           label="Amount"
-                          onChange={this.handleChange}
+                          onChange={handleChange}
                           name="amount"
                         />
                       </div>
@@ -175,14 +152,14 @@ class Expenses extends Component {
                           type="text"
                           id="description"
                           label="Description"
-                          onChange={this.handleChange}
+                          onChange={handleChange}
                           name="description"
                         />
                       </div>
                       <div>
                         <MaterialUIPickers
-                          selected={this.state.expense.date}
-                          onChange={this.handleDateChange}
+                          selected={expense.date}
+                          onChange={handleDateChange}
                           id="date"
                           name="date"
                         />
@@ -193,7 +170,7 @@ class Expenses extends Component {
                       variant="outlined"
                       size="small"
                       className={classes.button}
-                      onClick={this.handleSubmit}
+                      onClick={handleSubmit}
                       type="submit"
                     >
                       Save
@@ -203,7 +180,7 @@ class Expenses extends Component {
                       variant="outlined"
                       size="small"
                       className={classes.button}
-                      onClick={this.cancelExpense}
+                      onClick={cancelExpense}
                     >
                       Cancel
                     </Button>
@@ -213,16 +190,13 @@ class Expenses extends Component {
               <Grid item xs={12} sm={6}>
                 <Paper className={classes.paper}>
                   <h1>Statement of all expenses</h1>
-                  <ExpensesTable expenses={expenses} />
+                  <ExpensesTable expenses={expenses}/>
                 </Paper>
               </Grid>
-            </Grid>
-          </div>
-          <StickyFooter />
-        </React.Fragment>
-      );
-    }
-  }
-}
-
+        </Grid>
+      </div>
+      <StickyFooter/>
+    </React.Fragment>
+  );
+};
 export default withStyles(useStyles)(Expenses);
