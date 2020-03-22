@@ -61,13 +61,13 @@ export default function SignIn() {
 
   const login = async () => {
     try {
+      localStorage.removeItem('token');
       const data = await request('/authenticate', {
         body: JSON.stringify({ username, password }),
         method: 'POST',
       });
 
       localStorage.setItem('token', data.token);
-      localStorage.setItem('id', data.id);
       if (data.token != null) {
         setLoggedIn(true);
       } else {

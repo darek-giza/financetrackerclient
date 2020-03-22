@@ -7,7 +7,6 @@ import Incomes from './pages/Incomes';
 import Expenses from './pages/Expenses';
 import Types from './pages/Types';
 import SignIn from './pages/SignIn';
-import Logout from './pages/Logout';
 import Signup from './pages/Signup';
 import Dashboard from './components/Dashboard'
 import 'typeface-roboto'
@@ -24,7 +23,6 @@ const App = () => (
         <Route path="/type" exact={true} component={Types}/>
         <Route path="/signin" exact={true} component={SignIn}/>
         <Route path="/signup" exact={true} component={Signup}/>
-        <Route path="/logout" exact={true} component={Logout}/>
       </Switch>
     </Dashboard>
   </Router>
