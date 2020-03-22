@@ -20,7 +20,7 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
     setLoading(true);
     setError('');
     try {
-      const incomes = await request('http://localhost:8080/api/incomes');
+      const incomes = await request('/api/incomes');
       setIncomes(incomes);
     } catch {
       setError("Couldn't load incomes");

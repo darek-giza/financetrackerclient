@@ -23,7 +23,7 @@ export const ExpenseTypeForm = ({ onAdd }) => {
         setError('');
         setLoading(true);
         event.preventDefault();
-        await request('http://localhost:8080/api/type', {
+        await request('/api/type', {
           method: 'POST',
           body: JSON.stringify({ description }),
         });

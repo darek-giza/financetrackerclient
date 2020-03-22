@@ -61,7 +61,7 @@ export default function SignIn() {
 
   const login = async () => {
     try {
-      const data = await request('http://localhost:8080/authenticate', {
+      const data = await request('/authenticate', {
         body: JSON.stringify({ username, password }),
         method: 'POST',
       });

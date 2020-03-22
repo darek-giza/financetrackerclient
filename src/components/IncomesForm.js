@@ -30,7 +30,7 @@ export const Incomes = ({ onAdd }) => {
         setLoading(true);
         event.preventDefault();
         income.date = moment(income.date).format('YYYY-MM-DD');
-        await request('http://localhost:8080/api/incomes', {
+        await request('/api/incomes', {
           method: 'POST',
           body: JSON.stringify([income]),
         });

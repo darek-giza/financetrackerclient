@@ -25,7 +25,7 @@ export const ExpenseForm = ({ onAdd }) => {
 
   const fetchTypes = useCallback(async () => {
     try {
-      const types = await request('http://localhost:8080/api/type');
+      const types = await request('/api/type');
       setTypes(types);
     } catch (e) {
       console.log(e);
@@ -48,7 +48,7 @@ export const ExpenseForm = ({ onAdd }) => {
         setLoading(true);
         event.preventDefault();
         expense.date = moment(expense.date).format('YYYY-MM-DD');
-        await request('http://localhost:8080/api/expenses', {
+        await request('/api/expenses', {
           method: 'POST',
           body: JSON.stringify([expense]),
         });

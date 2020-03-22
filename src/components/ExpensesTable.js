@@ -21,7 +21,7 @@ export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
     setLoading(true);
     setError('');
     try {
-      const expenses = await request('http://localhost:8080/api/expenses');
+      const expenses = await request('/api/expenses');
       setExpenses(expenses);
     } catch {
       setError("Couldn't load incomes");

@@ -69,7 +69,7 @@ export default function SignUp() {
 
   const SignUp = async () => {
     try {
-      const data = await fetch('http://localhost:8080/register', {
+      const data = await fetch('/register', {
         body: JSON.stringify({ username, email, password }),
         method: 'POST',
         headers: {

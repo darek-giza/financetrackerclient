@@ -14,7 +14,7 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
     setLoading(true);
     setError('');
     try {
-      const types = await request('http://localhost:8080/api/type');
+      const types = await request('/api/type');
       setTypes(types);
     } catch {
       setError("Couldn't load incomes");

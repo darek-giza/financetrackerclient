@@ -15,7 +15,7 @@ export const User = () => {
     setLoading(true);
     setError('');
     try {
-      const user = await request('http://localhost:8080/api/user');
+      const user = await request('/api/user');
       setUser(user);
     } catch {
       setError("Couldn't load user data");
