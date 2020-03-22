@@ -17,15 +17,21 @@ export const Incomes = () => {
 
   return (
     <Grid container spacing={3} direction="column">
-      <Typography variant="h2" component="h1">
+      <Typography variant="h2" component="h1" className="header">
         Incomes
       </Typography>
-      <Typography variant="h5">Add a new income ...</Typography>
-      <Paper>
+      <Typography variant="h5" className="sub-header">
+        Add a new income ...
+      </Typography>
+      <Paper className="section">
         <IncomesForm onAdd={onAdd} />
       </Paper>
-      <Typography variant="h5">Statement of all incomes</Typography>
-      <IncomesList shouldRefresh={refresh} onRefresh={onRefresh} />
+      <Typography variant="h5" className="sub-header">
+        Statement of all incomes
+      </Typography>
+      <Paper className="section">
+        <IncomesList shouldRefresh={refresh} onRefresh={onRefresh} />
+      </Paper>
     </Grid>
   );
 };

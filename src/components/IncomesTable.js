@@ -10,6 +10,7 @@ import Moment from 'react-moment';
 import { request } from '../utils/request';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Spinner from './Spinner';
 
 export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
   const [isLoading, setLoading] = useState(false);
@@ -45,7 +46,8 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
+      {isLoading && <Spinner type="table" />}
       <Table size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -55,18 +57,15 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {isLoading && <CircularProgress color="secondary" />}
-          {incomes.map(income => {
-            return (
-              <TableRow key={income.id}>
-                <TableCell>
-                  <Moment format="DD-MM-YYYY">{income.date}</Moment>
-                </TableCell>
-                <TableCell>{income.description}</TableCell>
-                <TableCell align="right">{income.amount}</TableCell>
-              </TableRow>
-            );
-          })}
+          {incomes.map(income => (
+            <TableRow key={income.id}>
+              <TableCell>
+                <Moment format="DD-MM-YYYY">{income.date}</Moment>
+              </TableCell>
+              <TableCell>{income.description}</TableCell>
+              <TableCell align="right">{income.amount}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

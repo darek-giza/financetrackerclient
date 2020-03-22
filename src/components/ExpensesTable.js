@@ -10,7 +10,7 @@ import TableBody from '@material-ui/core/TableBody';
 import 'react-datepicker/dist/react-datepicker.css';
 import { request } from '../utils/request';
 import Alert from '@material-ui/lab/Alert';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Spinner from './Spinner';
 
 export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
   const [expenses, setExpenses] = useState([]);
@@ -46,7 +46,8 @@ export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
+      {isLoading && <Spinner />}
       <Table size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -57,7 +58,6 @@ export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {isLoading && <CircularProgress color="secondary" />}
           {expenses.map(expense => {
             return (
               <TableRow key={expense.id}>

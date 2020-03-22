@@ -7,11 +7,11 @@ import List from '@material-ui/core/List';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import PersonIcon from '@material-ui/icons/Person';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import './ListItems.css';
 
 export const MainList = () => {
@@ -26,7 +26,7 @@ export const MainList = () => {
   }, {
     text: 'Incomes',
     link: '/incomes',
-    Icon: PeopleIcon,
+    Icon: MonetizationOnIcon,
   }, {
     text: 'Expense types',
     link: '/type',
@@ -34,7 +34,7 @@ export const MainList = () => {
   }, {
     text: 'User',
     link: '/user',
-    Icon: LayersIcon,
+    Icon: PersonIcon,
   }];
 
   return (

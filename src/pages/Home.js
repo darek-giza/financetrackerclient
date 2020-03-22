@@ -1,47 +1,74 @@
 import React from 'react';
-import { withStyles } from '@material-ui/styles';
-import Link from '@material-ui/core/Link';
-import lightblue from '@material-ui/core/colors/lightBlue';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import './Home.css';
 
-const styles = {
-  intro: {
-    width: 'auto',
-    height: '1024px',
-    backgroundImage: 'url(' + require('../images/intro_image.jpg') + ')',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    color: lightblue[200],
-    letterSpacing: '6px',
-    fontSize: '140px',
-    textAlign: 'right',
-    padding: '0px 40px 0px 0px',
-    fontWeight: 'bold',
-  },
-  link: {
-    fontSize: '40px',
-    color: 'inherit',
-    fontWeight: 'normal',
-  },
-  description: {
-    textAlign: 'left',
-    fontSize: '40px',
-    padding: '440px 0px 0px 40px ',
-    fontWeight: 'normal',
-  },
-};
-
-const Home = ({ classes }) => (
-  <div className={classes.intro}>
-    <span>Finance tracker</span>
-    <br />
-    <Link href="/signin" className={classes.link} color="primary">
-      Log in here ..
-    </Link>
-    <div className={classes.description}>
-      <p>Want to know where your money is?</p>
-      <p>Log in, add your income and expenses and</p>
-      <p>check what's going on your money ...?</p>
-    </div>
-  </div>
+const Home = () => (
+  <Container>
+    <Typography variant="h2" component="h1" className="header">
+      Dashboard
+    </Typography>
+    <Typography variant="h4" component="h1" className="header">
+      Expenses
+    </Typography>
+    <Grid container direction="row" justify="space-around" align="center">
+      <Grid item>
+        <Typography variant="h5" component="h1" className="header">
+          Daily
+        </Typography>
+        <Paper className="block">
+          <Avatar className="badge badge-green">$250</Avatar>
+        </Paper>
+      </Grid>
+      <Grid item>
+        <Typography variant="h5" component="h1" className="header">
+          Weekly
+        </Typography>
+        <Paper className="block">
+          <Avatar className="badge badge-green">$250</Avatar>
+        </Paper>
+      </Grid>
+      <Grid item>
+        <Typography variant="h5" component="h1" className="header">
+          Monthly
+        </Typography>
+        <Paper className="block">
+          <Avatar className="badge badge-green">$250</Avatar>
+        </Paper>
+      </Grid>
+    </Grid>
+    <Typography variant="h4" component="h1" className="header">
+      Incomes
+    </Typography>
+    <Grid container direction="row" justify="space-around" align="center">
+      <Grid item>
+        <Typography variant="h5" component="h1" className="header">
+          Daily
+        </Typography>
+        <Paper className="block">
+          <Avatar className="badge badge-orange">$250</Avatar>
+        </Paper>
+      </Grid>
+      <Grid item>
+        <Typography variant="h5" component="h1" className="header">
+          Weekly
+        </Typography>
+        <Paper className="block">
+          <Avatar className="badge badge-orange">$250</Avatar>
+        </Paper>
+      </Grid>
+      <Grid item>
+        <Typography variant="h5" component="h1" className="header">
+          Monthly
+        </Typography>
+        <Paper className="block">
+          <Avatar className="badge badge-orange">$250</Avatar>
+        </Paper>
+      </Grid>
+    </Grid>
+  </Container>
 );
-export default withStyles(styles)(Home);
+export default Home;

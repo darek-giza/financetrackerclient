@@ -1,0 +1,18 @@
+.block {
+    box-sizing: border-box;
+    margin: 16px 16px 32px 16px;
+    padding: 40px;
+}
+
+.MuiAvatar-root.badge {
+    height: 150px;
+    width: 150px;
+}
+
+.MuiAvatar-root.badge-orange {
+    background: #ff9800;
+}
+
+.MuiAvatar-root.badge-green {
+    background: #00897b;
+}

@@ -83,10 +83,6 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
     overflow: 'auto',
   },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
@@ -107,7 +103,6 @@ export default function Dashboard({ children }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
@@ -164,7 +159,7 @@ export default function Dashboard({ children }) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="lg" className="main-container">
           {children}
         </Container>
         <Box pt={4}>

@@ -18,15 +18,19 @@ export const Types = () => {
 
   return (
     <Grid container spacing={3} direction="column">
-      <Typography variant="h2" component="h1">
+      <Typography variant="h2" component="h1" className="header">
         Expense types
       </Typography>
-      <Typography variant="h5">Add a new type ...</Typography>
-      <Paper>
+      <Typography variant="h5" className="sub-header">
+        Add a new type ...
+      </Typography>
+      <Paper className="section">
         <ExpenseTypeForm onAdd={onAdd} />
       </Paper>
-      <Typography variant="h5">All types of expenses you have</Typography>
-      <Paper>
+      <Typography variant="h5" className="sub-header">
+        All types of expenses you have
+      </Typography>
+      <Paper className="section">
         <ExpenseTypeList shouldRefresh={refresh} onRefresh={onRefresh} />
       </Paper>
     </Grid>

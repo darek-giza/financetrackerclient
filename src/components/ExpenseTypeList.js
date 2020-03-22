@@ -3,7 +3,8 @@ import Chip from '@material-ui/core/Chip';
 import { request } from '../utils/request';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Alert from '@material-ui/lab/Alert';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Spinner from './Spinner';
+import './ExpenseTypeList.css';
 
 export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
   const [types, setTypes] = useState([]);
@@ -39,13 +40,13 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
   }
 
   return (
-    <div>
-      {isLoading && <CircularProgress color="secondary" />}
+    <div className="type-chips-container">
+      {isLoading && <Spinner color="secondary" />}
       {types.map(type => {
         return (
           <Chip
             onDelete={() => {}}
-            // variant="outlined"
+            className="type-chip"
             size="small"
             icon={<ChevronRightIcon />}
             label={type.description}

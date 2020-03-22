@@ -19,15 +19,21 @@ export const Expenses = () => {
 
   return (
     <Grid container spacing={3} direction="column">
-      <Typography variant="h2" component="h1">
+      <Typography variant="h2" component="h1" className="header">
         Expenses
       </Typography>
-      <Typography variant="h5">Add a new expense ...</Typography>
-      <Paper>
+      <Typography variant="h5" className="sub-header">
+        Add a new expense ...
+      </Typography>
+      <Paper className="section">
         <ExpensesForm onAdd={onAdd} />
       </Paper>
-      <Typography variant="h5">Statement of all expenses</Typography>
-      <ExpensesTable shouldRefresh={refresh} onRefresh={onRefresh} />
+      <Typography variant="h5" className="sub-header">
+        Statement of all expenses
+      </Typography>
+      <Paper className="section">
+        <ExpensesTable shouldRefresh={refresh} onRefresh={onRefresh} />
+      </Paper>
     </Grid>
   );
 };

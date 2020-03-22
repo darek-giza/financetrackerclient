@@ -4,7 +4,8 @@ import { request } from '../utils/request';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/lab/Alert';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Paper from '@material-ui/core/Paper';
+import Spinner from '../components/Spinner';
 
 export const User = () => {
   const [user, setUser] = useState();
@@ -30,7 +31,7 @@ export const User = () => {
 
   return (
     <Grid container spacing={3} direction="column">
-      <Typography variant="h2" component="h1">
+      <Typography variant="h2" component="h1" className="header">
         User
       </Typography>
       {error ? (
@@ -39,17 +40,15 @@ export const User = () => {
         </Alert>
       ) : (
         <React.Fragment>
-          {isLoading && <CircularProgress color="secondary" />}
-          <Typography variant="h5">User data</Typography>
+          {isLoading && (
+            <Paper className="section">
+              <Spinner />
+            </Paper>
+          )}
+          <Typography variant="h5" className="sub-header">
+            User data
+          </Typography>
           <UserData user={user} />
-          {/*<Typography variant="h5">*/}
-          {/*  List of amounts of your recent expenses*/}
-          {/*</Typography>*/}
-          {/*<UserExpenseList user={user} />*/}
-          {/*<Typography variant="h5">*/}
-          {/*  List of amounts of your recent incomes*/}
-          {/*</Typography>*/}
-          {/*<UserIncomeList user={user} />*/}
         </React.Fragment>
       )}
     </Grid>

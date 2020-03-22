@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import User from './pages/User';
 import Home from './pages/Home';
@@ -10,7 +9,7 @@ import SignIn from './pages/SignIn';
 import Signup from './pages/Signup';
 import Dashboard from './components/Dashboard'
 import 'typeface-roboto'
-
+import './App.css';
 
 const App = () => (
   <Router>
