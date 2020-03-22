@@ -20,5 +20,13 @@ export const request = async (url, config = {}) => {
     ...config,
     headers: getHeaders(config.headers),
   });
-  return await request.json();
+  if (request.ok) {
+    return await request.json();
+  }
+
+  if (request.status === 401) {
+    window.location.replace('/signin');
+  }
+
+  throw new Error('API error');
 };
