@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { Link } from "react-router-dom";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -11,52 +12,46 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import { Link } from "react-router-dom";
+import './ListItems.css';
 
-export const MainList = () => (
-  <List>
-    <Link to="/">
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Home" />
-    </ListItem>
-    </Link>
-    <Link to="/expenses">
-      <ListItem button>
-        <ListItemIcon>
-          <ShoppingCartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Expenses" />
-      </ListItem>
-    </Link>
-    <Link to="/incomes">
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Incomes" />
-    </ListItem>
-    </Link>
-    <Link to="/type">
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Expense types" />
-    </ListItem>
-    </Link>
-    <Link to="/user">
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="User" />
-    </ListItem>
-    </Link>
-  </List>
-);
+export const MainList = () => {
+  const items = [{
+    text: 'Home',
+    link: '/',
+    Icon: DashboardIcon,
+  }, {
+    text: 'Expenses',
+    link: '/expenses',
+    Icon: ShoppingCartIcon,
+  }, {
+    text: 'Incomes',
+    link: '/incomes',
+    Icon: PeopleIcon,
+  }, {
+    text: 'Expense types',
+    link: '/type',
+    Icon: BarChartIcon,
+  }, {
+    text: 'User',
+    link: '/user',
+    Icon: LayersIcon,
+  }];
+
+  return (
+    <List>
+      {items.map(({text, link, Icon}) => (
+        <Link to={link} className="navigation-link">
+          <ListItem button className="navigation-list-item">
+            <ListItemIcon>
+              <Icon className="navigation-link-icon"/>
+            </ListItemIcon>
+            <ListItemText primary={text} className="navigation-link-text"/>
+          </ListItem>
+        </Link>
+      ))}
+    </List>
+  )
+};
 
 export const SecondaryList = () => {
   const onLogoutClick = useCallback(() => {
@@ -64,33 +59,32 @@ export const SecondaryList = () => {
     window.location.replace('/signin')
   }, []);
 
+  const items = [{
+    text: 'Current month',
+    Icon: AssignmentIcon
+  }, {
+    text: 'Last quarter',
+    Icon: AssignmentIcon
+  }, {
+    text: 'Year-end sale',
+    Icon: AssignmentIcon
+  }, {
+    text: 'Logout',
+    onClick: onLogoutClick,
+    Icon: LockOpenIcon
+  }];
+
   return (
     <List>
       <ListSubheader inset>Saved reports</ListSubheader>
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Current month" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Last quarter" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <AssignmentIcon />
-        </ListItemIcon>
-        <ListItemText primary="Year-end sale" />
-      </ListItem>
-      <ListItem button onClick={onLogoutClick}>
-        <ListItemIcon>
-          <LockOpenIcon />
-        </ListItemIcon>
-        <ListItemText primary="Logout" />
-      </ListItem>
+      {items.map(({text, onClick, Icon}) => (
+        <ListItem button className="navigation-list-item" onClick={onClick}>
+          <ListItemIcon>
+            <Icon className="navigation-link-icon"/>
+          </ListItemIcon>
+          <ListItemText primary={text} className="navigation-link-text"/>
+        </ListItem>
+      ))}
     </List>
   )
 };

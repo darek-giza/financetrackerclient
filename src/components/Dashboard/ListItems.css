@@ -1,0 +1,9 @@
+.navigation-link {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.navigation-list-item:hover .navigation-link-text,
+.navigation-list-item:hover .navigation-link-icon {
+    color: rgb(63, 81, 181);
+}
