@@ -1,6 +1,6 @@
 export default {
   baseUrl: {
-    production: '',
+    production: 'https://financetraker.herokuapp.com',
     development: 'http://localhost:8080',
   }
 }
