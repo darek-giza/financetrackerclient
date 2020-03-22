@@ -22,14 +22,15 @@ export const UserIncomeList = ({ user }) => (
         </TableRow>
       </TableHead>
       <TableBody>
-        {user.budget.incomes.map(item => {
-          return (
-            <TableRow key={item.id}>
-              <TableCell>{item.description}</TableCell>
-              <TableCell>{item.amount} </TableCell>
-            </TableRow>
-          );
-        })}
+        {user &&
+          user.budget.incomes.map(item => {
+            return (
+              <TableRow key={item.id}>
+                <TableCell>{item.description}</TableCell>
+                <TableCell>{item.amount} </TableCell>
+              </TableRow>
+            );
+          })}
       </TableBody>
     </Table>
   </TableContainer>

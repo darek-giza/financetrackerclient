@@ -22,14 +22,15 @@ export const UserExpenseList = ({ user }) => (
         </TableRow>
       </TableHead>
       <TableBody>
-        {user.budget.expense.map(item => {
-          return (
-            <TableRow key={item.id}>
-              <TableCell>{item.expenseType.description} </TableCell>
-              <TableCell>{item.amount} </TableCell>
-            </TableRow>
-          );
-        })}
+        {user &&
+          user.budget.expense.map(item => {
+            return (
+              <TableRow key={item.id}>
+                <TableCell>{item.expenseType.description} </TableCell>
+                <TableCell>{item.amount} </TableCell>
+              </TableRow>
+            );
+          })}
       </TableBody>
     </Table>
   </TableContainer>
