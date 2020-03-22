@@ -4,6 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import { Button, Container } from '@material-ui/core';
 import MaterialUIPickers from '../components/MaterialUIPickers';
 import moment from 'moment';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
+import Toast from './Toast';
 
 export const Incomes = ({ onAdd }) => {
   const [income, setIncome] = useState({
@@ -11,6 +14,9 @@ export const Incomes = ({ onAdd }) => {
     amount: null,
     date: new Date(),
   });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
   const cancelIncomes = useCallback(() => {
     document.getElementById('create-income-form').reset();
@@ -19,6 +25,9 @@ export const Incomes = ({ onAdd }) => {
   const handleSubmit = useCallback(
     async event => {
       try {
+        setSuccess('');
+        setError('');
+        setLoading(true);
         event.preventDefault();
         income.date = moment(income.date).format('YYYY-MM-DD');
         await request('http://localhost:8080/api/incomes', {
@@ -27,8 +36,11 @@ export const Incomes = ({ onAdd }) => {
         });
         onAdd();
         cancelIncomes();
+        setSuccess('Adding success.');
       } catch (error) {
-        console.log('Adding income failed', error);
+        setError('Adding failure');
+      } finally {
+        setLoading(false);
       }
     },
     [income, onAdd]
@@ -50,13 +62,15 @@ export const Incomes = ({ onAdd }) => {
 
   return (
     <Container maxWidth="sm">
-      <form
-        noValidate
-        autoComplete="off"
-        id="create-income-form"
-        onSubmit={handleSubmit}
-      >
+      {error && (
+        <Alert severity="error" variant="filled">
+          {error}
+        </Alert>
+      )}
+      {success && <Toast message={success} type="success" />}
+      <form autoComplete="off" id="create-income-form" onSubmit={handleSubmit}>
         <TextField
+          required
           type="text"
           id="description"
           label="Description"
@@ -65,6 +79,7 @@ export const Incomes = ({ onAdd }) => {
         />
         <div>
           <TextField
+            required
             type="text"
             id="amount"
             label="Amount"
@@ -74,30 +89,26 @@ export const Incomes = ({ onAdd }) => {
         </div>
         <div>
           <MaterialUIPickers
+            required
             selected={income.date}
             onChange={handleDateChange}
             id="date"
             name="date"
           />
         </div>
+        <Button color="primary" variant="outlined" size="small" type="submit">
+          {isLoading && <CircularProgress color="secondary" />}
+          Save
+        </Button>{' '}
+        <Button
+          color="secondary"
+          variant="outlined"
+          size="small"
+          onClick={cancelIncomes}
+        >
+          Cancel
+        </Button>
       </form>
-      <Button
-        color="primary"
-        variant="outlined"
-        size="small"
-        onClick={handleSubmit}
-        type="submit"
-      >
-        Save
-      </Button>{' '}
-      <Button
-        color="secondary"
-        variant="outlined"
-        size="small"
-        onClick={cancelIncomes}
-      >
-        Cancel
-      </Button>
     </Container>
   );
 };

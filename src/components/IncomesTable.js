@@ -8,15 +8,25 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Moment from 'react-moment';
 import { request } from '../utils/request';
+import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
-  const [isLoaded, setLoaded] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [incomes, setIncomes] = useState([]);
 
   const fetchIncomes = useCallback(async () => {
-    const incomes = await request('http://localhost:8080/api/incomes');
-    setIncomes(incomes);
-    setLoaded(true);
+    setLoading(true);
+    setError('');
+    try {
+      const incomes = await request('http://localhost:8080/api/incomes');
+      setIncomes(incomes);
+    } catch {
+      setError("Couldn't load incomes");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -26,8 +36,12 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
     }
   }, [shouldRefresh]);
 
-  if (isLoaded !== true) {
-    return '... is loading';
+  if (error) {
+    return (
+      <Alert severity="error" variant="filled">
+        {error}
+      </Alert>
+    );
   }
 
   return (
@@ -41,6 +55,7 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
           </TableRow>
         </TableHead>
         <TableBody>
+          {isLoading && <CircularProgress color="secondary" />}
           {incomes.map(income => {
             return (
               <TableRow key={income.id}>
