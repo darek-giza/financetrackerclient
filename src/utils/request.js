@@ -1,11 +1,10 @@
 import config from '../config';
 
-const { NODE_ENV } = process.env;
+const { REACT_APP_LOCAL } = process.env;
 
-const BASE_URL =
-  NODE_ENV === 'development'
-    ? config.baseUrl.development
-    : config.baseUrl.production;
+const BASE_URL = REACT_APP_LOCAL
+  ? config.baseUrl.development
+  : config.baseUrl.production;
 
 const getHeaders = headers => {
   const token = localStorage.getItem('token');
