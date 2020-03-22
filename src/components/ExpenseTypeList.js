@@ -1,17 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Chip from '@material-ui/core/Chip';
-import FaceIcon from '@material-ui/icons/Face';
 import { request } from '../utils/request';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
   const [types, setTypes] = useState([]);
-  const [isLoaded, setLoaded] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const fetchTypes = useCallback(async () => {
-    const types = await request('http://localhost:8080/api/type');
-    setTypes(types);
-    setLoaded(true);
+    setLoading(true);
+    setError('');
+    try {
+      const types = await request('http://localhost:8080/api/type');
+      setTypes(types);
+    } catch {
+      setError("Couldn't load incomes");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -21,12 +30,17 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
     }
   }, [shouldRefresh]);
 
-  if (!isLoaded || !types) {
-    return '... is loading';
+  if (error) {
+    return (
+      <Alert severity="error" variant="filled">
+        {error}
+      </Alert>
+    );
   }
 
   return (
     <div>
+      {isLoading && <CircularProgress color="secondary" />}
       {types.map(type => {
         return (
           <Chip
