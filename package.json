@@ -37,7 +37,6 @@
   "pre-commit": [
     "prettier"
   ],
-  "proxy": "http://loclhost:8080",
   "eslintConfig": {
     "extends": "react-app"
   },
