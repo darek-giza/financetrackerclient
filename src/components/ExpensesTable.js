@@ -9,16 +9,25 @@ import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import 'react-datepicker/dist/react-datepicker.css';
 import { request } from '../utils/request';
-import Grid from '@material-ui/core/Grid';
+import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
   const [expenses, setExpenses] = useState([]);
-  const [isLoaded, setLoaded] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const fetchExpenses = useCallback(async () => {
-    const expenses = await request('http://localhost:8080/api/expenses');
-    setExpenses(expenses);
-    setLoaded(true);
+    setLoading(true);
+    setError('');
+    try {
+      const expenses = await request('http://localhost:8080/api/expenses');
+      setExpenses(expenses);
+    } catch {
+      setError("Couldn't load incomes");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -28,8 +37,12 @@ export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
     }
   }, [shouldRefresh]);
 
-  if (isLoaded !== true) {
-    return '... is loading';
+  if (error) {
+    return (
+      <Alert severity="error" variant="filled">
+        {error}
+      </Alert>
+    );
   }
 
   return (
@@ -44,6 +57,7 @@ export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
           </TableRow>
         </TableHead>
         <TableBody>
+          {isLoading && <CircularProgress color="secondary" />}
           {expenses.map(expense => {
             return (
               <TableRow key={expense.id}>

@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import Paper from '@material-ui/core/Paper';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button, Container } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { request } from '../utils/request';
 import MaterialUIPickers from '../components/MaterialUIPickers';
 import moment from 'moment';
-import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
+import Alert from '@material-ui/lab/Alert';
+import Toast from './Toast';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
 
 export const ExpenseForm = ({ onAdd }) => {
   const [types, setTypes] = useState([]);
@@ -17,9 +19,17 @@ export const ExpenseForm = ({ onAdd }) => {
     description: null,
     date: new Date(),
   });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [isLoading, setLoading] = useState(false);
+
   const fetchTypes = useCallback(async () => {
-    const types = await request('http://localhost:8080/api/type');
-    setTypes(types);
+    try {
+      const types = await request('http://localhost:8080/api/type');
+      setTypes(types);
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   useEffect(() => {
@@ -33,6 +43,9 @@ export const ExpenseForm = ({ onAdd }) => {
   const handleSubmit = useCallback(
     async event => {
       try {
+        setSuccess('');
+        setError('');
+        setLoading(true);
         event.preventDefault();
         expense.date = moment(expense.date).format('YYYY-MM-DD');
         await request('http://localhost:8080/api/expenses', {
@@ -41,8 +54,11 @@ export const ExpenseForm = ({ onAdd }) => {
         });
         onAdd();
         cancelExpense();
+        setSuccess('Adding success.');
       } catch (error) {
-        console.log('Adding expense failed', error);
+        setError('Adding failure');
+      } finally {
+        setLoading(false);
       }
     },
     [expense, onAdd]
@@ -64,32 +80,37 @@ export const ExpenseForm = ({ onAdd }) => {
 
   return (
     <Container maxWidth="sm">
-      <form
-        noValidate
-        autoComplete="off"
-        id="create-expense-form"
-        onSubmit={handleSubmit}
-      >
+      {error && (
+        <Alert severity="error" variant="filled">
+          {error}
+        </Alert>
+      )}
+      {success && <Toast message={success} type="success" />}
+      <form autoComplete="off" id="create-expense-form" onSubmit={handleSubmit}>
         <div>
-          <TextField
-            type="text"
-            name="expenseType"
-            id="expenseType"
-            select
-            label="Type of expenses"
-            value={types.description}
-            onChange={handleChange}
-            helperText="Please select type of your expense"
-          >
-            {types.map(type => (
-              <MenuItem key={type.id} value={type.description}>
-                {type.description}
-              </MenuItem>
-            ))}
-          </TextField>
+          <FormControl required>
+            <Select
+              required
+              native
+              type="text"
+              name="expenseType"
+              id="expenseType"
+              label="Type of expenses"
+              value={types.description}
+              onChange={handleChange}
+              helperText="Please select type of your expense"
+            >
+              {types.map(type => (
+                <option key={type.id} value={type.description}>
+                  {type.description}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
         </div>
         <div>
           <TextField
+            required
             type="text"
             id="amount"
             label="Amount"
@@ -99,6 +120,7 @@ export const ExpenseForm = ({ onAdd }) => {
         </div>
         <div>
           <TextField
+            required
             type="text"
             id="description"
             label="Description"
@@ -108,30 +130,26 @@ export const ExpenseForm = ({ onAdd }) => {
         </div>
         <div>
           <MaterialUIPickers
+            required
             selected={expense.date}
             onChange={handleDateChange}
             id="date"
             name="date"
           />
         </div>
+        <Button color="primary" variant="outlined" size="small" type="submit">
+          {isLoading && <CircularProgress color="secondary" />}
+          Save
+        </Button>{' '}
+        <Button
+          color="secondary"
+          variant="outlined"
+          size="small"
+          onClick={cancelExpense}
+        >
+          Cancel
+        </Button>
       </form>
-      <Button
-        color="primary"
-        variant="outlined"
-        size="small"
-        onClick={handleSubmit}
-        type="submit"
-      >
-        Save
-      </Button>{' '}
-      <Button
-        color="secondary"
-        variant="outlined"
-        size="small"
-        onClick={cancelExpense}
-      >
-        Cancel
-      </Button>
     </Container>
   );
 };
