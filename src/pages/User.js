@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import UserData from '../components/UserData';
-import UserExpenseList from '../components/UserExpenseList';
-import UserIncomeList from '../components/UserIncomeList';
 import { request } from '../utils/request';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -44,14 +42,14 @@ export const User = () => {
           {isLoading && <CircularProgress color="secondary" />}
           <Typography variant="h5">User data</Typography>
           <UserData user={user} />
-          <Typography variant="h5">
-            List of amounts of your recent expenses
-          </Typography>
-          <UserExpenseList user={user} />
-          <Typography variant="h5">
-            List of amounts of your recent incomes
-          </Typography>
-          <UserIncomeList user={user} />
+          {/*<Typography variant="h5">*/}
+          {/*  List of amounts of your recent expenses*/}
+          {/*</Typography>*/}
+          {/*<UserExpenseList user={user} />*/}
+          {/*<Typography variant="h5">*/}
+          {/*  List of amounts of your recent incomes*/}
+          {/*</Typography>*/}
+          {/*<UserIncomeList user={user} />*/}
         </React.Fragment>
       )}
     </Grid>

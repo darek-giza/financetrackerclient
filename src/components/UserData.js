@@ -27,9 +27,6 @@ export const UserData = ({ user }) =>
           </TableRow>
         </TableBody>
       </Table>
-      <Button variant="outlined" size="large">
-        Edit
-      </Button>
     </TableContainer>
   ) : null;
 export default UserData;
