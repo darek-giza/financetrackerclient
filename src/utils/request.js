@@ -24,7 +24,7 @@ export const request = async (url, config = {}) => {
     return await request.json();
   }
 
-  if (request.status === 401) {
+  if (request.status === 401 && window.location.pathname !== '/signin') {
     window.location.replace('/signin');
   }
 

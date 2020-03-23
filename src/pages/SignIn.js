@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function Copyright() {
   return (
@@ -50,6 +52,8 @@ export default function SignIn() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [error, setError] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
   const onUsernameChange = event => {
     setUsername(event.target.value);
@@ -59,24 +63,27 @@ export default function SignIn() {
     setPassword(event.target.value);
   };
 
-  const login = async () => {
+  const login = async event => {
+    event.preventDefault();
     try {
+      setError('');
+      setLoading(true);
       localStorage.removeItem('token');
       const data = await request('/authenticate', {
         body: JSON.stringify({ username, password }),
         method: 'POST',
       });
-
       localStorage.setItem('token', data.token);
       if (data.token != null) {
         setLoggedIn(true);
-      } else {
-        console.log('Token undefined', data.token);
       }
     } catch (error) {
       localStorage.removeItem('token');
       setLoggedIn(false);
+      setError('User name or password incorrect');
       return <Redirect to="/" />;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -91,7 +98,12 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={login}>
+          {error && (
+            <Alert severity="error" variant="filled">
+              {error}
+            </Alert>
+          )}
           <TextField
             onChange={onUsernameChange}
             variant="outlined"
@@ -122,11 +134,13 @@ export default function SignIn() {
           />
           <Button
             fullWidth
+            type="submit"
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={login}
           >
+            {' '}
+            {isLoading && <CircularProgress color="secondary" />}
             Sign In
           </Button>
           <Grid container>
