@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -13,6 +11,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { request } from '../utils/request';
 
 function Copyright() {
   return (
@@ -45,6 +46,9 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  alert: {
+    margin: theme.spacing(3, 0),
+  },
 }));
 
 export default function SignUp() {
@@ -54,6 +58,8 @@ export default function SignUp() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
   const onUsernameChange = event => {
     setUsername(event.target.value);
@@ -67,9 +73,12 @@ export default function SignUp() {
     setPassword(event.target.value);
   };
 
-  const SignUp = async () => {
+  const SignUp = async event => {
+    event.preventDefault();
     try {
-      const data = await fetch('/register', {
+      setError('');
+      setLoading(true);
+      const data = await request('/register', {
         body: JSON.stringify({ username, email, password }),
         method: 'POST',
         headers: {
@@ -79,6 +88,9 @@ export default function SignUp() {
       setSuccess(true);
     } catch (error) {
       setSuccess(false);
+      setError('Creating user failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -93,9 +105,14 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={SignUp}>
+          {error && (
+            <Alert className={classes.alert} severity="error" variant="filled">
+              {error}
+            </Alert>
+          )}
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 onChange={onUsernameChange}
                 autoComplete="fname"
@@ -106,18 +123,6 @@ export default function SignUp() {
                 id="firstName"
                 label="User Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                // onChange={onUserLastNameChange}
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
               />
             </Grid>
             <Grid item xs={12}>
@@ -146,21 +151,15 @@ export default function SignUp() {
                 autoComplete="current-password"
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
           </Grid>
           <Button
-            // type="submit"
+            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={SignUp}
           >
+            {isLoading && <CircularProgress color="secondary" />}
             Sign Up
           </Button>
           <Grid container justify="flex-end">
