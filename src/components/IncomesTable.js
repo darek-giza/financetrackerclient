@@ -5,12 +5,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import Moment from 'react-moment';
 import { request } from '../utils/request';
 import Alert from '@material-ui/lab/Alert';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Spinner from './Spinner';
+import Button from '@material-ui/core/Button';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
   const [isLoading, setLoading] = useState(false);
@@ -29,6 +30,8 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
       setLoading(false);
     }
   }, []);
+
+  const onDelete = useCallback(() => {}, []);
 
   useEffect(() => {
     if (shouldRefresh) {
@@ -53,7 +56,8 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
           <TableRow>
             <TableCell>Date</TableCell>
             <TableCell>Description</TableCell>
-            <TableCell align="right">Amount</TableCell>
+            <TableCell>Amount</TableCell>
+            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -63,7 +67,12 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
                 <Moment format="DD-MM-YYYY">{income.date}</Moment>
               </TableCell>
               <TableCell>{income.description}</TableCell>
-              <TableCell align="right">{income.amount}</TableCell>
+              <TableCell>{income.amount}</TableCell>
+              <TableCell>
+                <Button onClick={onDelete}>
+                  <DeleteOutlineIcon color="secondary" />
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
