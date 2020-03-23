@@ -16,21 +16,17 @@ const getHeaders = headers => {
 };
 
 export const request = async (url, config = {}) => {
-  try {
-    const request = await fetch(`${BASE_URL}${url}`, {
-      ...config,
-      headers: getHeaders(config.headers),
-    });
-    if (request.ok) {
-      return await request.json();
-    }
-
-    if (request.status === 401 && window.location.pathname !== '/signin') {
-      window.location.replace('/signin');
-    }
-    throw new Error('API error');
-  } catch {
-    window.location.replace('/signin');
-    throw new Error('Connection error');
+  const request = await fetch(`${BASE_URL}${url}`, {
+    ...config,
+    headers: getHeaders(config.headers),
+  });
+  if (request.ok) {
+    return await request.json();
   }
+
+  if (request.status === 401 && window.location.pathname !== '/signin') {
+    window.location.replace('/signin');
+  }
+
+  throw new Error('API error');
 };

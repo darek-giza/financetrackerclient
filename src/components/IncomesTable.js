@@ -11,7 +11,17 @@ import Alert from '@material-ui/lab/Alert';
 import Spinner from './Spinner';
 import Button from '@material-ui/core/Button';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import DeleteIcon from '@material-ui/icons/Delete';
+
+const RemoveButton = ({ income, onDelete }) => {
+  const onClick = useCallback(() => {
+    onDelete(income);
+  }, [income, onDelete]);
+  return (
+    <Button onClick={onClick}>
+      <DeleteOutlineIcon color="secondary" />
+    </Button>
+  );
+};
 
 export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
   const [isLoading, setLoading] = useState(false);
@@ -31,7 +41,22 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
     }
   }, []);
 
-  const onDelete = useCallback(() => {}, []);
+  const onDelete = useCallback(async income => {
+    setLoading(true);
+    setError('');
+    try {
+      console.log({ income });
+      await request('/api/incomes', {
+        method: 'DELETE',
+        body: JSON.stringify(income),
+      });
+      fetchIncomes();
+    } catch {
+      setError("Couldn't delete income");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (shouldRefresh) {
@@ -69,9 +94,7 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
               <TableCell>{income.description}</TableCell>
               <TableCell>{income.amount}</TableCell>
               <TableCell>
-                <Button onClick={onDelete}>
-                  <DeleteOutlineIcon color="secondary" />
-                </Button>
+                <RemoveButton onDelete={onDelete} income={income} />
               </TableCell>
             </TableRow>
           ))}
