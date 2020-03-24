@@ -1,0 +1,12 @@
+.footer-container {
+    display: flex;
+    flex-direction: column;
+}
+.footer {
+    padding: 10px 0px 10px;
+    text-align: center;
+    background-color: #e1e4e8;
+    /*theme.palette.type === 'dark'*/
+    /*? theme.palette.grey[800]*/
+    /*: theme.palette.grey[200],*/
+}
