@@ -79,7 +79,8 @@ export default function SignIn() {
             required
             fullWidth
             id="username"
-            label="User name"
+            label="Email address"
+            type="email"
             name="username"
             autoComplete="username"
             autoFocus

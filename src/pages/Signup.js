@@ -16,7 +16,6 @@ import './Signup.css';
 
 export default function SignUp() {
   const [username, setUsername] = useState();
-  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -24,10 +23,6 @@ export default function SignUp() {
 
   const onUsernameChange = event => {
     setUsername(event.target.value);
-  };
-
-  const onEmailChange = event => {
-    setEmail(event.target.value);
   };
 
   const onPasswordChange = event => {
@@ -39,8 +34,8 @@ export default function SignUp() {
     try {
       setError('');
       setLoading(true);
-      const data = await request('/registerA', {
-        body: JSON.stringify({ username, email, password }),
+      const data = await request('/register', {
+        body: JSON.stringify({ username, password }),
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -76,24 +71,11 @@ export default function SignUp() {
             <Grid item xs={12}>
               <TextField
                 onChange={onUsernameChange}
-                autoComplete="fname"
-                name="userName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="User Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                onChange={onEmailChange}
                 variant="outlined"
                 required
                 fullWidth
                 type="email"
-                id="email"
+                id="username"
                 label="Email Address"
                 name="email"
                 autoComplete="email"

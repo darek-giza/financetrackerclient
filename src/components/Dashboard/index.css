@@ -1,0 +1,56 @@
+.root {
+    display:flex;
+}
+.toolbar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0px 8px;
+}
+.toolbar {
+    padding-right: 24px;
+}
+.menu-button {
+    margin-right: 36px;
+}
+.menu-button-hidden {
+    display: none;
+}
+.title {
+    flex-grow: 1;
+}
+.drawer-paper {
+    position: relative;
+    white-space: nowrap;
+    /*width: drawerWidth,*/
+    /*transition: theme.transitions.create('width', {*/
+    /*easing: theme.transitions.easing.sharp,*/
+    /*duration: theme.transitions.duration.enteringScreen,*/
+}
+.drawer-paper-close {
+    overflow: hidden;
+    /*transition: theme.transitions.create('width', {*/
+    /*easing: theme.transitions.easing.sharp,*/
+    /*duration: theme.transitions.duration.leavingScreen,*/
+    width: 7px;
+    /*[theme.breakpoints.up('sm')]: {*/
+    /*                                width: theme.spacing(9),*/
+}
+
+
+/*app-bar-spacer: theme.mixins.toolbar,*/
+
+.content {
+    flex-grow: 1;
+    height: 100vh;
+    overflow: auto;
+}
+.paper {
+    padding: 2px;
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+}
+.fixed-height {
+    height: 240px;
+}
