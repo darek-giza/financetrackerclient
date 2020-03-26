@@ -9,19 +9,7 @@ import Moment from 'react-moment';
 import { request } from '../utils/request';
 import Alert from '@material-ui/lab/Alert';
 import Spinner from './Spinner';
-import Button from '@material-ui/core/Button';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-
-const RemoveButton = ({ income, onDelete }) => {
-  const onClick = useCallback(() => {
-    onDelete(income);
-  }, [income, onDelete]);
-  return (
-    <Button onClick={onClick}>
-      <DeleteOutlineIcon color="secondary" />
-    </Button>
-  );
-};
+import RemoveButton from './RemoveButton';
 
 export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
   const [isLoading, setLoading] = useState(false);
@@ -41,14 +29,14 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
     }
   }, []);
 
-  const onDelete = useCallback(async income => {
+  const onDelete = useCallback(async item => {
     setLoading(true);
     setError('');
     try {
-      console.log({ income });
+      console.log({ item });
       await request('/api/incomes', {
         method: 'DELETE',
-        body: JSON.stringify(income),
+        body: JSON.stringify(item),
       });
       fetchIncomes();
     } catch {
@@ -86,15 +74,15 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {incomes.map(income => (
-            <TableRow key={income.id}>
+          {incomes.map(item => (
+            <TableRow key={item.id}>
               <TableCell>
-                <Moment format="DD-MM-YYYY">{income.date}</Moment>
+                <Moment format="DD-MM-YYYY">{item.date}</Moment>
               </TableCell>
-              <TableCell>{income.description}</TableCell>
-              <TableCell>{income.amount}</TableCell>
+              <TableCell>{item.description}</TableCell>
+              <TableCell>{item.amount}</TableCell>
               <TableCell>
-                <RemoveButton onDelete={onDelete} income={income} />
+                <RemoveButton onDelete={onDelete} item={item} />
               </TableCell>
             </TableRow>
           ))}

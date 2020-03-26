@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Chip from '@material-ui/core/Chip';
 import { request } from '../utils/request';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Alert from '@material-ui/lab/Alert';
 import Spinner from './Spinner';
 import './ExpenseTypeList.css';
+import RemoveButton from './RemoveButton';
 
 export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
   const [types, setTypes] = useState([]);
@@ -19,6 +19,23 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
       setTypes(types);
     } catch {
       setError("Couldn't load incomes");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const onDelete = useCallback(async item => {
+    setLoading(true);
+    setError('');
+    try {
+      console.log(item);
+      await request('/api/type', {
+        method: 'DELETE',
+        body: JSON.stringify(item),
+      });
+      fetchTypes();
+    } catch {
+      setError("Couldn't delete expense type");
     } finally {
       setLoading(false);
     }
@@ -42,16 +59,15 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
   return (
     <div className="type-chips-container">
       {isLoading && <Spinner color="secondary" />}
-      {types.map(type => {
+      {types.map(item => {
         return (
           <Chip
-            onDelete={() => {}}
             className="type-chip"
             size="small"
-            icon={<ChevronRightIcon />}
-            label={type.description}
+            label={item.description}
             clickable
             color="primary"
+            icon={<RemoveButton onDelete={onDelete} item={item} />}
           />
         );
       })}
