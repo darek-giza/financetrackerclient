@@ -5,6 +5,7 @@ import Alert from '@material-ui/lab/Alert';
 import Spinner from './Spinner';
 import './ExpenseTypeList.css';
 import RemoveButton from './RemoveButton';
+import { Button } from '@material-ui/core';
 
 export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
   const [types, setTypes] = useState([]);
@@ -24,18 +25,24 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
     }
   }, []);
 
+  const refresh = useCallback(() => {
+    setError('');
+    fetchTypes();
+  }, []);
+
   const onDelete = useCallback(async item => {
     setLoading(true);
     setError('');
     try {
-      console.log(item);
       await request('/api/type', {
         method: 'DELETE',
         body: JSON.stringify(item),
       });
       fetchTypes();
     } catch {
-      setError("Couldn't delete expense type");
+      setError(
+        "Added expense , couldn't delete expense type. Click alert to refresh page."
+      );
     } finally {
       setLoading(false);
     }
@@ -50,15 +57,16 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
 
   if (error) {
     return (
-      <Alert severity="error" variant="filled">
-        {error}
-      </Alert>
+      <Button onClick={refresh} className="type-button">
+        <Alert severity="error" variant="filled">
+          {error}
+        </Alert>
+      </Button>
     );
   }
 
   return (
     <div className="type-chips-container">
-      {isLoading && <Spinner color="secondary" />}
       {types.map(item => {
         return (
           <Chip
@@ -71,6 +79,7 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
           />
         );
       })}
+      {isLoading && <Spinner color="secondary" />}
     </div>
   );
 };
