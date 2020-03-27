@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import moment from 'moment';
 import TableContainer from '@material-ui/core/TableContainer';
-import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -11,6 +10,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { request } from '../utils/request';
 import Alert from '@material-ui/lab/Alert';
 import Spinner from './Spinner';
+import RemoveButton from './RemoveButton';
+import { Button } from '@material-ui/core';
 
 export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
   const [expenses, setExpenses] = useState([]);
@@ -30,6 +31,23 @@ export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
     }
   }, []);
 
+  const onDelete = useCallback(async item => {
+    setLoading(true);
+    setError('');
+    try {
+      console.log({ item });
+      await request('/api/expenses', {
+        method: 'DELETE',
+        body: JSON.stringify(item),
+      });
+      fetchExpenses();
+    } catch {
+      setError("Couldn't delete expense. Click alert to refresh page.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (shouldRefresh) {
       fetchExpenses();
@@ -37,11 +55,18 @@ export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
     }
   }, [shouldRefresh]);
 
+  const refresh = useCallback(() => {
+    setError('');
+    fetchExpenses();
+  }, []);
+
   if (error) {
     return (
-      <Alert severity="error" variant="filled">
-        {error}
-      </Alert>
+      <Button onClick={refresh} className="type-button">
+        <Alert severity="error" variant="filled">
+          {error}
+        </Alert>
+      </Button>
     );
   }
 
@@ -55,18 +80,20 @@ export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
             <TableCell>Type of expenses</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Amount</TableCell>
+            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {expenses.map(expense => {
+          {expenses.map(item => {
             return (
-              <TableRow key={expense.id}>
+              <TableRow key={item.id}>
+                <TableCell>{moment(item.date).format('DD-MM-YYYY')}</TableCell>
+                <TableCell>{item.expenseType.description}</TableCell>
+                <TableCell>{item.description}</TableCell>
+                <TableCell>{item.amount}</TableCell>
                 <TableCell>
-                  {moment(expense.date).format('DD-MM-YYYY')}
+                  <RemoveButton onDelete={onDelete} item={item} />
                 </TableCell>
-                <TableCell>{expense.expenseType.description}</TableCell>
-                <TableCell>{expense.description}</TableCell>
-                <TableCell>{expense.amount}</TableCell>
               </TableRow>
             );
           })}

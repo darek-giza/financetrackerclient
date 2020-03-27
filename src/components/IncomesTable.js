@@ -10,6 +10,7 @@ import { request } from '../utils/request';
 import Alert from '@material-ui/lab/Alert';
 import Spinner from './Spinner';
 import RemoveButton from './RemoveButton';
+import { Button } from '@material-ui/core';
 
 export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
   const [isLoading, setLoading] = useState(false);
@@ -40,7 +41,7 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
       });
       fetchIncomes();
     } catch {
-      setError("Couldn't delete income");
+      setError("Couldn't delete income. Click alert to refresh page.");
     } finally {
       setLoading(false);
     }
@@ -53,11 +54,18 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
     }
   }, [shouldRefresh]);
 
+  const refresh = useCallback(() => {
+    setError('');
+    fetchIncomes();
+  }, []);
+
   if (error) {
     return (
-      <Alert severity="error" variant="filled">
-        {error}
-      </Alert>
+      <Button onClick={refresh} className="type-button">
+        <Alert severity="error" variant="filled">
+          {error}
+        </Alert>
+      </Button>
     );
   }
 

@@ -95,10 +95,10 @@ export const ExpenseForm = ({ onAdd }) => {
               type="text"
               name="expenseType"
               id="expenseType"
-              label="Type of expenses"
+              label="Type"
               value={types.description}
               onChange={handleChange}
-              helperText="Please select type of your expense"
+              helperText="Select type"
             >
               {types.map(type => (
                 <option key={type.id} value={type.description}>
