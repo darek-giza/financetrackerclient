@@ -64,7 +64,12 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign in as ..
+          <br />
+          email: dg@op.pl
+          <br />
+          pass: user
+          <br />
         </Typography>
         <form className="form" onSubmit={login}>
           {error && (

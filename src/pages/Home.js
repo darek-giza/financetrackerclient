@@ -58,7 +58,7 @@ const Home = () => {
         </Grid>
         <Grid item>
           <Typography variant="h5" component="h1" className="header">
-            Annually
+            Yearly
           </Typography>
           <Paper className="block">
             <Avatar className="badge badge-green">

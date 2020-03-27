@@ -48,7 +48,7 @@ export const ExpensesCount = ({ shouldRefresh, onRefresh }) => {
   return (
     <div>
       {isLoading && <Spinner type="table" />}
-      {incomes.annually}
+      {incomes.yearly}
     </div>
   );
 };
