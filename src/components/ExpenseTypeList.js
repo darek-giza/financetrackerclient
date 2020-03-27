@@ -6,11 +6,14 @@ import Spinner from './Spinner';
 import './ExpenseTypeList.css';
 import RemoveButton from './RemoveButton';
 import { Button } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import AlertDialog from './AlertDialog';
 
 export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
   const [types, setTypes] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  let [open, setOpen] = useState(false);
 
   const fetchTypes = useCallback(async () => {
     setLoading(true);
@@ -30,23 +33,27 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
     fetchTypes();
   }, []);
 
-  const onDelete = useCallback(async item => {
-    setLoading(true);
-    setError('');
-    try {
-      await request('/api/type', {
-        method: 'DELETE',
-        body: JSON.stringify(item),
-      });
-      fetchTypes();
-    } catch {
-      setError(
-        "Added expense , couldn't delete expense type. Click alert to refresh page."
-      );
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const onDelete = useCallback(
+    async item => {
+      setOpen(true);
+      setLoading(true);
+      setError('');
+      try {
+        await request('/api/type', {
+          method: 'DELETE',
+          body: JSON.stringify(item),
+        });
+        fetchTypes();
+      } catch {
+        setError(
+          "Added expense , couldn't delete expense type. Click alert to refresh page."
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [open]
+  );
 
   useEffect(() => {
     if (shouldRefresh) {
@@ -69,14 +76,17 @@ export const ExpenseTypeList = ({ shouldRefresh, onRefresh }) => {
     <div className="type-chips-container">
       {types.map(item => {
         return (
-          <Chip
-            className="type-chip"
-            size="small"
-            label={item.description}
-            clickable
-            color="primary"
-            icon={<RemoveButton onDelete={onDelete} item={item} />}
-          />
+          <Box>
+            <Chip
+              className="type-chip"
+              size="small"
+              label={item.description}
+              clickable
+              color="primary"
+              icon={<RemoveButton onDelete={onDelete} item={item} />}
+            />
+            <AlertDialog open={open} />
+          </Box>
         );
       })}
       {isLoading && <Spinner color="secondary" />}
