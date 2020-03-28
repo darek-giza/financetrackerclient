@@ -1,21 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { request } from '../utils/request';
+import { request } from '../../utils/request';
 import Alert from '@material-ui/lab/Alert';
 import { Button } from '@material-ui/core';
-import Spinner from './Spinner';
+import Spinner from '../Spinner';
 
-export const ExpensesCount = ({ shouldRefresh, onRefresh }) => {
+export const Weekly = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [incomes, setIncomes] = useState('');
+  const [weekly ,setWeekly] = useState("0.00");
 
   const fetchCount = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
       const incomes = await request('/api/expenses/expenseCount');
-      console.log(incomes);
-      setIncomes(incomes);
+      setWeekly(incomes.weekly);
     } catch {
       setError("Couldn't load");
     } finally {
@@ -24,11 +23,8 @@ export const ExpensesCount = ({ shouldRefresh, onRefresh }) => {
   }, []);
 
   useEffect(() => {
-    if (shouldRefresh) {
-      fetchCount();
-      onRefresh();
-    }
-  }, [shouldRefresh]);
+    fetchCount();
+  }, []);
 
   const refresh = useCallback(() => {
     setError('');
@@ -48,8 +44,8 @@ export const ExpensesCount = ({ shouldRefresh, onRefresh }) => {
   return (
     <div>
       {isLoading && <Spinner type="table" />}
-      {incomes.yearly}
+      {weekly}
     </div>
   );
 };
-export default ExpensesCount;
+export default Weekly;

@@ -5,7 +5,10 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import './Home.css';
-import ExpensesCount from '../components/ExpensesCount';
+import Yearly from '../components/ExpenseCount/Yearly';
+import Monthly from '../components/ExpenseCount/Monthly';
+import { Weekly } from '../components/ExpenseCount/Weekly';
+import { Daily } from '../components/ExpenseCount/Daily';
 
 const Home = () => {
   const [refresh, setRefresh] = useState(true);
@@ -31,9 +34,7 @@ const Home = () => {
             Daily
           </Typography>
           <Paper className="block">
-            <Avatar className="badge badge-green">
-              ${<ExpensesCount shouldRefresh={refresh} onRefresh={onRefresh} />}
-            </Avatar>
+            <Avatar className="badge badge-green">${<Daily />}</Avatar>
           </Paper>
         </Grid>
         <Grid item>
@@ -41,9 +42,7 @@ const Home = () => {
             Weekly
           </Typography>
           <Paper className="block">
-            <Avatar className="badge badge-green">
-              ${<ExpensesCount shouldRefresh={refresh} onRefresh={onRefresh} />}
-            </Avatar>
+            <Avatar className="badge badge-green">${<Weekly />}</Avatar>
           </Paper>
         </Grid>
         <Grid item>
@@ -51,9 +50,7 @@ const Home = () => {
             Monthly
           </Typography>
           <Paper className="block">
-            <Avatar className="badge badge-green">
-              ${<ExpensesCount shouldRefresh={refresh} onRefresh={onRefresh} />}
-            </Avatar>
+            <Avatar className="badge badge-green">${<Monthly />}</Avatar>
           </Paper>
         </Grid>
         <Grid item>
@@ -61,9 +58,7 @@ const Home = () => {
             Yearly
           </Typography>
           <Paper className="block">
-            <Avatar className="badge badge-green">
-              ${<ExpensesCount shouldRefresh={refresh} onRefresh={onRefresh} />}
-            </Avatar>
+            <Avatar className="badge badge-green">${<Yearly />}</Avatar>
           </Paper>
         </Grid>
       </Grid>

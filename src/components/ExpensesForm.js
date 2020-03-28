@@ -113,7 +113,8 @@ export const ExpenseForm = ({ onAdd }) => {
         <div>
           <TextField
             required
-            type="text"
+            type="number"
+            step="any"
             id="amount"
             label="Amount"
             onChange={handleChange}
