@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -7,19 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import './Home.css';
 import Yearly from '../components/ExpenseCount/Yearly';
 import Monthly from '../components/ExpenseCount/Monthly';
-import { Weekly } from '../components/ExpenseCount/Weekly';
-import { Daily } from '../components/ExpenseCount/Daily';
+import Weekly from '../components/ExpenseCount/Weekly';
+import Daily from '../components/ExpenseCount/Daily';
 
 const Home = () => {
-  const [refresh, setRefresh] = useState(true);
-
-  const onAdd = useCallback(() => {
-    setRefresh(true);
-  }, []);
-  const onRefresh = useCallback(() => {
-    setRefresh(false);
-  }, []);
-
   return (
     <Container>
       <Typography variant="h2" component="h1" className="header">
