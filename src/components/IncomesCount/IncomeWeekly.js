@@ -4,17 +4,17 @@ import Alert from '@material-ui/lab/Alert';
 import { Button } from '@material-ui/core';
 import Spinner from '../Spinner';
 
-export const Yearly = () => {
+export const IncomeWeekly = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [yearly ,setYearly] = useState("0.00");
+  const [weekly, setWeekly] = useState("0.00");
 
   const fetchCount = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
-      const expense = await request('/api/expenses/expenseCount');
-      setYearly(expense.yearly);
+      const incomes = await request('/api/incomes/incomesCount');
+      setWeekly(incomes.weekly);
     } catch {
       setError("Couldn't load");
     } finally {
@@ -23,7 +23,7 @@ export const Yearly = () => {
   }, []);
 
   useEffect(() => {
-      fetchCount();
+    fetchCount();
   }, []);
 
   const refresh = useCallback(() => {
@@ -43,9 +43,9 @@ export const Yearly = () => {
 
   return (
     <div>
-      {isLoading && <Spinner type="table" />}
-      {yearly}
+      {isLoading && <Spinner type="table"/>}
+      {weekly}
     </div>
   );
 };
-export default Yearly;
+export default IncomeWeekly;

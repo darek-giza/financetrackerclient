@@ -9,6 +9,9 @@ import Yearly from '../components/ExpenseCount/Yearly';
 import Monthly from '../components/ExpenseCount/Monthly';
 import Weekly from '../components/ExpenseCount/Weekly';
 import Daily from '../components/ExpenseCount/Daily';
+import IncomeYearly from '../components/IncomesCount/IncomeYearly';
+import IncomeMonthly from '../components/IncomesCount/IncomeMonthly';
+import IncomeWeekly from '../components/IncomesCount/IncomeWeekly';
 
 const Home = () => {
   return (
@@ -59,18 +62,10 @@ const Home = () => {
       <Grid container direction="row" justify="space-around" align="center">
         <Grid item>
           <Typography variant="h5" component="h1" className="header">
-            Daily
-          </Typography>
-          <Paper className="block">
-            <Avatar className="badge badge-orange">$250</Avatar>
-          </Paper>
-        </Grid>
-        <Grid item>
-          <Typography variant="h5" component="h1" className="header">
             Weekly
           </Typography>
           <Paper className="block">
-            <Avatar className="badge badge-orange">$250</Avatar>
+            <Avatar className="badge badge-orange">${<IncomeWeekly />}</Avatar>
           </Paper>
         </Grid>
         <Grid item>
@@ -78,7 +73,15 @@ const Home = () => {
             Monthly
           </Typography>
           <Paper className="block">
-            <Avatar className="badge badge-orange">$250</Avatar>
+            <Avatar className="badge badge-orange">${<IncomeMonthly />}</Avatar>
+          </Paper>
+        </Grid>
+        <Grid item>
+          <Typography variant="h5" component="h1" className="header">
+            Yearly
+          </Typography>
+          <Paper className="block">
+            <Avatar className="badge badge-orange">${<IncomeYearly />}</Avatar>
           </Paper>
         </Grid>
       </Grid>

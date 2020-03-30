@@ -13,8 +13,8 @@ export const Monthly = () => {
     setLoading(true);
     setError('');
     try {
-      const incomes = await request('/api/expenses/expenseCount');
-      setMonthly(incomes.monthly);
+      const expense = await request('/api/expenses/expenseCount');
+      setMonthly(expense.monthly);
     } catch {
       setError("Couldn't load");
     } finally {

@@ -13,8 +13,8 @@ export const Daily = () => {
     setLoading(true);
     setError('');
     try {
-      const incomes = await request('/api/expenses/expenseCount');
-      setDaily(incomes.daily);
+      const expense = await request('/api/expenses/expenseCount');
+      setDaily(expense.daily);
     } catch {
       setError("Couldn't load");
     } finally {
@@ -41,9 +41,13 @@ export const Daily = () => {
     );
   }
 
+  if (daily == null) {
+    setDaily(0.00);
+  }
+
   return (
     <div>
-      {isLoading && <Spinner type="table" />}
+      {isLoading && <Spinner type="table"/>}
       {daily}
     </div>
   );

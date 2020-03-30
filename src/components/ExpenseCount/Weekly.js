@@ -13,8 +13,8 @@ export const Weekly = () => {
     setLoading(true);
     setError('');
     try {
-      const incomes = await request('/api/expenses/expenseCount');
-      setWeekly(incomes.weekly);
+      const expense = await request('/api/expenses/expenseCount');
+      setWeekly(expense.weekly);
     } catch {
       setError("Couldn't load");
     } finally {
