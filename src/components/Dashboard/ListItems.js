@@ -12,6 +12,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import PersonIcon from '@material-ui/icons/Person';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import TimelineIcon from '@material-ui/icons/Timeline';
 import './ListItems.css';
 
 export const MainList = () => {
@@ -35,7 +36,12 @@ export const MainList = () => {
     text: 'User',
     link: '/user',
     Icon: PersonIcon,
-  }];
+  },
+    {
+      text: 'Chart yearly',
+      link: '/chart',
+      Icon: TimelineIcon,
+    }];
 
   return (
     <List>
