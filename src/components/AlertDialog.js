@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,14 +6,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export const AlertDialog = ({ open }) => {
-  const handleDelete = useCallback(() => {
-    console.log('in delete button', open);
-  }, [open]);
-
-  const handleCancel = useCallback(() => {
-    console.log('in cancel button', open);
-  }, [open]);
+export const AlertDialog = ({
+  open,
+  handleDelete,
+  handleCancel,
+  text,
+  title,
+}) => {
   return (
     <Dialog
       open={open}
@@ -21,12 +20,10 @@ export const AlertDialog = ({ open }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
-        {'Delete expense type ???'}
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Confirm deleting the item from the database.
+          {text}
         </DialogContentText>
       </DialogContent>
       <DialogActions>

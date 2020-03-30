@@ -90,7 +90,12 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
               <TableCell>{item.description}</TableCell>
               <TableCell>{item.amount}</TableCell>
               <TableCell>
-                <RemoveButton onDelete={onDelete} item={item} />
+                <RemoveButton
+                  onDelete={onDelete}
+                  item={item}
+                  title={'Delete income ???'}
+                  text={'Confirm deleting incomes from the database.'}
+                />
               </TableCell>
             </TableRow>
           ))}
