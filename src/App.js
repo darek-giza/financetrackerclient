@@ -8,9 +8,9 @@ import Types from './pages/Types';
 import SignIn from './pages/SignIn';
 import Signup from './pages/Signup';
 import Dashboard from './components/Dashboard'
-import Chart from './components/Chart'
 import 'typeface-roboto'
 import './App.css';
+import ChartYearly from "./components/ChartYearly";
 
 const App = () => (
   <Router>
@@ -23,7 +23,7 @@ const App = () => (
         <Route path="/type" exact={true} component={Types}/>
         <Route path="/signin" exact={true} component={SignIn}/>
         <Route path="/signup" exact={true} component={Signup}/>
-        <Route path="/chart" exact={true} component={Chart}/>
+        <Route path="/chart" exact={true} component={ChartYearly}/>
       </Switch>
     </Dashboard>
   </Router>
