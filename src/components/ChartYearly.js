@@ -4,6 +4,9 @@ import { Button, Container } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Chart from './Chart';
 import Spinner from './Spinner';
+import Paper from '@material-ui/core/Paper';
+import './Chart.css';
+import Typography from '@material-ui/core/Typography';
 
 const ChartYearly = () => {
   const [data, setDat] = useState([]);
@@ -42,10 +45,15 @@ const ChartYearly = () => {
     );
   }
   return (
-    <div>
-      {isLoading && <Spinner />}
-      <Chart data={data} />
-    </div>
+    <Container>
+      <Typography variant="h2" component="h1" className="header">
+        Chart for 2020
+      </Typography>
+      <Paper className="chart-container">
+        {isLoading && <Spinner />}
+        <Chart data={data} />
+      </Paper>
+    </Container>
   );
 };
 export default ChartYearly;

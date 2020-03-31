@@ -12,10 +12,10 @@ import { Container } from '@material-ui/core';
 
 const Chart = ({ data }) => {
   return (
-    <Container>
-      <LineChart width={1250} height={600} data={data}>
+    <Container className="chart-container">
+      <LineChart width={1200} height={600} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" padding={{ left: 40, right: 40 }} />
+        <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
         <YAxis />
         <Tooltip />
         <Legend />
