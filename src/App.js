@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import User from './pages/User';
 import Home from './pages/Home';
 import Incomes from './pages/Incomes';
 import Expenses from './pages/Expenses';
@@ -17,7 +16,6 @@ const App = () => (
     <Dashboard>
       <Switch>
         <Route path="/" exact={true} component={Home}/>
-        <Route path="/user" exact={true} component={User}/>
         <Route path="/incomes" exact={true} component={Incomes}/>
         <Route path="/expenses" exact={true} component={Expenses}/>
         <Route path="/type" exact={true} component={Types}/>
