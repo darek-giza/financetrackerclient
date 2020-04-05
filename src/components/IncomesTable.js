@@ -12,7 +12,7 @@ import Spinner from './Spinner';
 import RemoveButton from './RemoveButton';
 import { Button } from '@material-ui/core';
 
-export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
+export const IncomesTable = ({ shouldRefresh, onRefresh, onRemove }) => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [incomes, setIncomes] = useState([]);
@@ -39,6 +39,7 @@ export const IncomesTable = ({ shouldRefresh, onRefresh }) => {
         method: 'DELETE',
         body: JSON.stringify(item),
       });
+      onRemove();
       fetchIncomes();
     } catch {
       setError("Couldn't delete income. Click alert to refresh page.");

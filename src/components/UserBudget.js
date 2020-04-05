@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { request } from '../utils/request';
 import Grid from '@material-ui/core/Grid';
 import Alert from '@material-ui/lab/Alert';
-import Paper from '@material-ui/core/Paper';
 import Spinner from '../components/Spinner';
 import UserBudgetData from './UserBudgetData';
+import { Button } from '@material-ui/core';
+import './UserBudget.css';
 
-export const UserBudget = () => {
+export const UserBudget = ({ shouldRefresh, onRefresh }) => {
   const [user, setUser] = useState();
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -25,25 +26,33 @@ export const UserBudget = () => {
   }, []);
 
   useEffect(() => {
+    if (shouldRefresh) {
+      fetchUser();
+      onRefresh();
+    }
+  }, [shouldRefresh]);
+
+  const refresh = useCallback(() => {
+    setError('');
     fetchUser();
   }, []);
 
-  return (
-    <Grid container spacing={3} direction="column">
-      {error ? (
+  if (error) {
+    return (
+      <Button onClick={refresh} className="type-button">
         <Alert severity="error" variant="filled">
           {error}
         </Alert>
-      ) : (
-        <React.Fragment>
-          {isLoading && (
-            <Paper className="section">
-              <Spinner />
-            </Paper>
-          )}
-          <UserBudgetData user={user} />
-        </React.Fragment>
-      )}
+      </Button>
+    );
+  }
+
+  return (
+    <Grid container spacing={3} direction="column" className="container-card">
+      <React.Fragment>
+        {isLoading && <Spinner />}
+        <UserBudgetData user={user} />
+      </React.Fragment>
     </Grid>
   );
 };

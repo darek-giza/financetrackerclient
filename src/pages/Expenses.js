@@ -19,6 +19,10 @@ export const Expenses = () => {
     setRefresh(false);
   }, []);
 
+  const onRemove = useCallback(() => {
+    setRefresh(true);
+  }, []);
+
   return (
     <Grid container spacing={3} direction="column">
       <Typography variant="h2" component="h1" className="header">
@@ -29,13 +33,21 @@ export const Expenses = () => {
       </Typography>
       <Paper className="container">
         <ExpensesForm onAdd={onAdd} />
-        <UserBudget />
+        <UserBudget
+          shouldRefresh={refresh}
+          onRefresh={onRefresh}
+          className="container-budget"
+        />
       </Paper>
       <Typography variant="h5" className="sub-header">
         Statement of all expenses
       </Typography>
       <Paper className="section">
-        <ExpensesTable shouldRefresh={refresh} onRefresh={onRefresh} />
+        <ExpensesTable
+          shouldRefresh={refresh}
+          onRefresh={onRefresh}
+          onRemove={onRemove}
+        />
       </Paper>
     </Grid>
   );

@@ -13,7 +13,7 @@ import Spinner from './Spinner';
 import RemoveButton from './RemoveButton';
 import { Button } from '@material-ui/core';
 
-export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
+export const ExpenseTable = ({ shouldRefresh, onRefresh, onRemove }) => {
   const [expenses, setExpenses] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -40,6 +40,7 @@ export const ExpenseTable = ({ shouldRefresh, onRefresh }) => {
         method: 'DELETE',
         body: JSON.stringify(item),
       });
+      onRemove();
       fetchExpenses();
     } catch {
       setError("Couldn't delete expense. Click alert to refresh page.");
