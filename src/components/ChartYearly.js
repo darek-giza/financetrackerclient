@@ -17,7 +17,7 @@ const ChartYearly = () => {
     setLoading(true);
     setError('');
     try {
-      const data = await request('/api/chartYearly');
+      const data = await request('/api/chartWeekly');
       setDat(data);
     } catch {
       setError("Couldn't load chart data");

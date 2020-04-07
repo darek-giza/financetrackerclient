@@ -29,7 +29,7 @@ export const Incomes = ({ onAdd }) => {
         setError('');
         setLoading(true);
         event.preventDefault();
-        income.date = moment(income.date).format('YYYY-MM-DD');
+        income.date = moment(income.date);
         await request('/api/incomes', {
           method: 'POST',
           body: JSON.stringify([income]),
@@ -37,6 +37,7 @@ export const Incomes = ({ onAdd }) => {
         onAdd();
         cancelIncomes();
         setSuccess('Adding success.');
+        console.log([income]);
       } catch (error) {
         setError('Adding failure');
       } finally {

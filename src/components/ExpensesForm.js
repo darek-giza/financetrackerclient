@@ -47,9 +47,7 @@ export const ExpenseForm = ({ onAdd }) => {
         setError('');
         setLoading(true);
         event.preventDefault();
-        expense.date = moment(expense.date).format('YYYY-MM-DD');
-        console.log('expense.date in handle submit', expense.date);
-        console.log('expense', [expense]);
+        expense.date = moment(expense.date);
         await request('/api/expenses', {
           method: 'POST',
           body: JSON.stringify([expense]),
