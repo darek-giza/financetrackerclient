@@ -10,10 +10,10 @@ import {
 } from 'recharts';
 import { Container } from '@material-ui/core';
 
-const Chart = ({ data }) => {
+const Chart = ({ data, width, height }) => {
   return (
     <Container className="chart-container">
-      <LineChart width={1200} height={600} data={data}>
+      <LineChart width={width} height={height} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
         <YAxis />
