@@ -4,15 +4,18 @@ import { Container } from '@material-ui/core';
 import './Chart.css';
 import FetchChart from './FetchChart';
 
-const Chart2020 = () => {
-  const loadYearly = useCallback(async () => {
+const ChartYearly = () => {
+  const load = useCallback(async () => {
     return await request('/api/chartYearly');
   }, []);
 
   return (
     <Container>
-      <FetchChart loadData={loadYearly} title={'Chart for 2020'} />
+      <FetchChart loadData={load}
+                  width={1000}
+                  height={300}
+      />
     </Container>
   );
 };
-export default Chart2020;
+export default ChartYearly;

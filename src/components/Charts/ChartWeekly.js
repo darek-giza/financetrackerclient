@@ -6,13 +6,13 @@ import FetchChart from './FetchChart';
 
 const ChartWeekly = ({shouldRefresh, onRefresh}) => {
 
-  const loadYearly = useCallback(async () => {
+  const load = useCallback(async () => {
     return await request('/api/chartWeekly');
   }, []);
 
   return (
     <Container>
-      <FetchChart loadData={loadYearly}
+      <FetchChart loadData={load}
                   width={1000}
                   height={300}
                   shouldRefresh={shouldRefresh}

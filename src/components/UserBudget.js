@@ -51,7 +51,7 @@ export const UserBudget = ({ shouldRefresh, onRefresh }) => {
     <Grid container spacing={3} direction="column" className="container-card">
       <React.Fragment>
         {isLoading && <Spinner />}
-        <UserBudgetData user={user} />
+        <UserBudgetData user={user} date={new Date()} />
       </React.Fragment>
     </Grid>
   );
