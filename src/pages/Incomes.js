@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { Paper } from '@material-ui/core';
 import UserBudget from '../components/UserBudget';
 import './Incomes.css';
-import ChartWeekly from '../components/ChartWeekly';
+import ChartWeekly from '../components/Charts/ChartWeekly';
 
 export const Incomes = () => {
   const [refresh, setRefresh] = useState(true);
@@ -31,7 +31,7 @@ export const Incomes = () => {
         Chart for last week
       </Typography>
       <Paper className="container">
-        <ChartWeekly />
+        <ChartWeekly shouldRefresh={refresh} onRefresh={onRefresh} />
       </Paper>
       <Typography variant="h5" className="sub-header">
         Add a new income ...

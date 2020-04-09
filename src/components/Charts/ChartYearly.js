@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { request } from '../utils/request';
+import { request } from '../../utils/request';
 import { Container } from '@material-ui/core';
 import './Chart.css';
 import FetchChart from './FetchChart';

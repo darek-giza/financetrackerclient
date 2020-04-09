@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis, } from 'recharts';
 import { Container } from '@material-ui/core';
 
 const Chart = ({ data, width, height }) => {

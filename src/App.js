@@ -9,7 +9,7 @@ import Signup from './pages/Signup';
 import Dashboard from './components/Dashboard'
 import 'typeface-roboto'
 import './App.css';
-import Chart2020 from "./components/ChartYearly";
+import Chart2020 from "./components/Charts/ChartYearly";
 
 const App = () => (
   <Router>
