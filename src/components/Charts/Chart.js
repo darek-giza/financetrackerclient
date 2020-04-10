@@ -1,26 +1,26 @@
 import React from 'react';
-import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis, } from 'recharts';
-import { Container } from '@material-ui/core';
+import { Area, Bar, CartesianGrid, ComposedChart, Legend, Line, Tooltip, XAxis, YAxis, } from 'recharts';
 
 const Chart = ({ data, width, height }) => {
+
   return (
-    <Container className="chart-container">
-      <LineChart width={width} height={height} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="incomes"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line type="monotone" dataKey="expenses" stroke="#82ca9d" />
-        <Line type="monotone" dataKey="budget" stroke="#f50057" />
-      </LineChart>
-    </Container>
+    <ComposedChart
+      width={width}
+      height={height}
+      data={data}
+      margin={{
+        top: 20, right: 80, bottom: 20, left: 20,
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3"/>
+      <XAxis dataKey="name" label={{position: 'insideBottomRight', offset: 0}}/>
+      <YAxis label={{angle: -90, position: 'insideLeft'}}/>
+      <Tooltip/>
+      <Legend/>
+      <Bar dataKey="incomes" barSize={5} fill="#00cc99"/>
+      <Bar dataKey="expenses" barSize={5} fill="#cc0000"/>
+      <Line type="monotone" dataKey="budget" stroke="#3333cc"/>
+    </ComposedChart>
   );
-};
+}
 export default Chart;

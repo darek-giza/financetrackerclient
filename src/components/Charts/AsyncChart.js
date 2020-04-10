@@ -6,7 +6,7 @@ import Spinner from '../Spinner';
 import Paper from '@material-ui/core/Paper';
 import './Chart.css';
 
-const FetchChart = ({loadData, width, height, shouldRefresh, onRefresh}) => {
+const AsyncChart = ({loadData, width, height, shouldRefresh, onRefresh}) => {
   const [data, setDat] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -54,4 +54,4 @@ const FetchChart = ({loadData, width, height, shouldRefresh, onRefresh}) => {
     </Container>
   );
 };
-export default FetchChart;
+export default AsyncChart;

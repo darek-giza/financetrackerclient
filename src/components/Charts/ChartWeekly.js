@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { request } from '../../utils/request';
 import { Container } from '@material-ui/core';
 import './Chart.css';
-import FetchChart from './FetchChart';
+import AsyncChart from './AsyncChart';
 
 const ChartWeekly = ({shouldRefresh, onRefresh}) => {
 
@@ -12,7 +12,7 @@ const ChartWeekly = ({shouldRefresh, onRefresh}) => {
 
   return (
     <Container>
-      <FetchChart loadData={load}
+      <AsyncChart loadData={load}
                   width={1000}
                   height={300}
                   shouldRefresh={shouldRefresh}
