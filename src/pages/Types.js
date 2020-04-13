@@ -4,6 +4,7 @@ import ExpenseTypeForm from '../components/ExpenseTypeForm';
 import ExpenseTypeList from '../components/ExpenseTypeList';
 import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import ChartPie from '../components/Charts/ChartPie';
 
 export const Types = () => {
   const [refresh, setRefresh] = useState(true);
@@ -26,6 +27,7 @@ export const Types = () => {
       </Typography>
       <Paper className="section">
         <ExpenseTypeForm onAdd={onAdd} />
+        <ChartPie />
       </Paper>
       <Typography variant="h5" className="sub-header">
         All types of expenses you have
