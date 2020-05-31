@@ -2,7 +2,7 @@ import React from 'react';
 import { Cell, Pie, PieChart, } from 'recharts';
 import { Container } from "@material-ui/core";
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#0088FE', '#FF00FF', '#00C49F', '#FFFF00', '#FFBB28', '#FF8042', '#008000', '#00FF00'];
 
 const render = ({
                   cx, cy, midAngle, innerRadius, outerRadius, percent
@@ -18,6 +18,7 @@ const render = ({
     </text>
   );
 };
+
 const PieCharts = ({data}) => {
 
   return (
