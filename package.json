@@ -13,7 +13,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "cors": "^2.8.5",
-    "eslint": "^6.8.0",
+    "eslint": "^9.26.0",
     "material-ui-icons": "^1.0.0-beta.36",
     "material-ui-image": "^3.2.2",
     "moment": "^2.24.0",
